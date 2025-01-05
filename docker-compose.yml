@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-scraper
+    ports:
+      - "27017:27017"
+    networks:
+      - gamesprer_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: yinnohs
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+      MONGO_INITDB_DATABASE: gamesprer
+
+networks:
+  gamesprer_network:
+    driver: bridge
