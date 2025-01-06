@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: gamesprer
+  data:
+    mongodb:
+      uri: mongodb://yinnohs:1234@127.0.0.1:27017/gamesprer?authSource=admin
+      auto-index-creation: true
+    
+
+server:
+  port: 5052
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
+rsa:
+  private-key: classpath:certs/private-final-key.pem
+  public-key: classpath:certs/public-key.pem
+
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
+
+argon2:
+  memory: 7168
+  iterations: 5
+  parallelism: 1
+  saltLength: 2
