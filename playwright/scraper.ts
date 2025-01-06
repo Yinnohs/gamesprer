@@ -38,6 +38,7 @@ const urlInstantGame = `https://www.instant-gaming.com/en/search/?query=${gameNa
     })
     
     console.log("persist-data");
+    console.log(identifiedData);
     persistGameData(identifiedData)
 
     await browser.close()
@@ -54,7 +55,8 @@ async function getDataFromHumbleBundle(page: Page ): Promise<Omit<GamesData, 'id
     const data = await page.$$eval("div.entity", (gamesCards)=>{
 
         function formatPrice (price :string | undefined): number {
-            if (price === undefined) return 0.0
+            console.log(price);
+            if (price === undefined || price.trim() === '') return 0.0
             return parseFloat(price.substring(1))
         }
 
@@ -81,19 +83,19 @@ async function getDataFromHumbleBundle(page: Page ): Promise<Omit<GamesData, 'id
 async function getDataFromInstantGaming(page: Page ): Promise<Omit<GamesData, 'id'>[]>{
     await page.goto(urlInstantGame)
 
-    await page.waitForTimeout(2000)
+    await page.waitForTimeout(1000)
     await page.evaluate(()=> window.scroll(0, 400))
     await page.evaluate(()=> window.scroll(0, 400))
     await page.evaluate(()=> window.scroll(0, 400))
-    await page.waitForTimeout(2000)
+    await page.waitForTimeout(1000)
 
     const data =  await page.$$eval("div.item", (gamesCards)=>{
 
         console.log(gamesCards.length);
          
         function formatPrice (price :string | undefined): number {
-            if (price === undefined) return 0.0
-            return parseFloat(price.substring(1))
+            if (price === undefined || price.trim() === '') return 0.0
+            return parseFloat(price.slice(0,-1))
         }
 
         const formattedData : Omit<GamesData, 'id'>[] = gamesCards.map((mainCard)=>{
