@@ -1,10 +1,14 @@
 {
-    "compilerOptions": {
-      "target": "ES2020",
-      "module": "commonjs",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
-    }
-  }
+  "compilerOptions": {
+    "target": "ESNext", // Use ESNext for modern syntax
+    "module": "ESNext", // Use ES Modules
+    "moduleResolution": "Node", // Node.js-style module resolution
+    "outDir": "./dist", // Output directory for compiled JS files
+    "esModuleInterop": true, // Allow default imports from CommonJS modules
+    "forceConsistentCasingInFileNames": true,
+    "strict": true, // Enable strict type-checking
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"], // Include TypeScript files in the src folder
+  "exclude": ["node_modules", "dist"] // Exclude node_modules and build output
+}

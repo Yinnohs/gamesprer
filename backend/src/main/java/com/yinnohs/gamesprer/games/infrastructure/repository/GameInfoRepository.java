@@ -6,14 +6,14 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface GameInfoRepository extends MongoRepository<GameInfo ,String> {
-    @Query("{'title': /.*?0.*, 'scrapedAt': {$gte: ?1}}")
-    List<GameInfoDocument> findInfoWithSimilarTitle(String gameTitle, LocalDateTime currentDay);
+    @Query("{'title': { '$regex': '?0', '$options': 'i' }, 'scrapedAt': { $gte: ?1 }}")
+    List<GameInfoDocument> findInfoWithSimilarTitle(String gameTitle, Date currentDayHour);
 
-    @Query("{'title': ?0, 'scrapedAt': {$gte: ?1}}")
-    List<GameInfoDocument> findDataFromExactTitle(String gameTitle, LocalDateTime currentDay);
+    @Query("{'scrapedAt': { $gte: ?0 }}")
+    List<GameInfoDocument> findCurrentDateGameInfo(Date currentDayHour);
 }

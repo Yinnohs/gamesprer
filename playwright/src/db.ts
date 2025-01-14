@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb"
-import { GamesData } from "./types"
+import { type GamesData } from "./types.js"
 
 
 export  async function persistGameData(gameData: GamesData[]){
@@ -15,7 +15,7 @@ export  async function persistGameData(gameData: GamesData[]){
     try {
         await client.connect()
         const database = client.db('gamesprer')
-        const collection = database.collection<GamesData>('games')   
+        const collection = database.collection<GamesData>('gameInfo')   
         const result = await collection.insertMany(gameData);
 
         return result;

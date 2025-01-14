@@ -1,4 +1,4 @@
-export interface GamesData{
+export type GamesData = {
     id:string
     url: string
     title: string

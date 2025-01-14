@@ -7,10 +7,11 @@ import com.yinnohs.gamesprer.games.infrastructure.repository.GameInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,49 +20,57 @@ public class GameInfoServiceImpl implements GameInfoService {
 
     private final GameInfoRepository repository;
     private final GameInfoMapper mapper;
+    private final ApiService api;
+
 
     @Override
-    public List<GameInfo> findGameWhereTitleNameSimilarTo(String gameTitle) {
-        var gameList =  repository.findInfoWithSimilarTitle(gameTitle, getCurrentDay())
-                .stream()
-                .map(mapper::toDomainModel)
-                .toList();
+    public List<GameInfo> findGameInfoByTitleAndScrap(String gameTitle) {
+        var gameList = findGameWhereTitleNameSimilarTo(gameTitle);
 
         if (gameList.isEmpty()){
             executeScraper(gameTitle);
+            gameList = findGameWhereTitleNameSimilarTo(gameTitle);
         }
 
-        return gameList;
+        return  gameList;
     }
 
     @Override
     public List<GameInfo> findAllGamesFromToday() {
-        return List.of();
-    }
-
-    @Override
-    public List<GameInfo> findExactGameByTitle(String gameTitle) {
-        var gameList =  repository.findDataFromExactTitle(gameTitle, getCurrentDay())
+        var currentDate = getCurrentDate();
+        return repository
+                .findCurrentDateGameInfo(currentDate)
                 .stream()
                 .map(mapper::toDomainModel)
                 .toList();
+    }
 
-        if (gameList.size() == 0){
-            executeScraper(gameTitle);
-        }
-
-        return gameList;
+    private List<GameInfo> findGameWhereTitleNameSimilarTo(String gameTitle) {
+        var currentDate = getCurrentDate();
+        return repository.findInfoWithSimilarTitle(gameTitle+".*", currentDate )
+                .stream()
+                .map(mapper::toDomainModel)
+                .toList();
     }
 
     private void executeScraper(String gameTitle){
         try {
-            Process process = Runtime.getRuntime().exec("npm scrapper " + gameTitle);
-        } catch (IOException e) {
+            api.callExternalApi(gameTitle);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private LocalDateTime getCurrentDay (){
-        return  LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0,0));
+    private Date getCurrentDate (){
+
+        var currentDate =  LocalDateTime.now()
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0)
+                .toLocalDate();
+
+        return Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
+
 }

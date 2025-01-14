@@ -1,19 +1,15 @@
-import playwright, { Page } from 'playwright'
+import playwright, { type Page } from 'playwright'
 import { getRandom } from 'random-useragent'
-import {GamesData} from './types'
-import { persistGameData } from './db'
+import { type GamesData } from './types.js'
+import { persistGameData } from './db.js'
 import {v7 as uuid} from 'uuid'
 
-const gameName = process.argv[2]
-if (!gameName) {
-    console.error('Please provide a game name as an argument.');
-    process.exit(1);
-}
 
-const urlHumbleBundle = `https://www.humblebundle.com/store/search?search=${gameName}`;
-const urlInstantGame = `https://www.instant-gaming.com/en/search/?query=${gameName}`
 
-;(async ()=>{
+export async function scrapeData(gameName:string){
+    
+    const urlHumbleBundle = `https://www.humblebundle.com/store/search?search=${gameName}`;
+    const urlInstantGame = `https://www.instant-gaming.com/en/search/?query=${gameName}`
 
     // create random user agent
     const agent = getRandom()
@@ -26,8 +22,8 @@ const urlInstantGame = `https://www.instant-gaming.com/en/search/?query=${gameNa
     await page.setDefaultTimeout(30000)
     await page.setViewportSize({width:800, height:600})
     
-    const humbleBundleGames = await getDataFromHumbleBundle(page);
-    const instantGaminGames = await getDataFromInstantGaming(page)
+    const humbleBundleGames = await getDataFromHumbleBundle(page, urlHumbleBundle);
+    const instantGaminGames = await getDataFromInstantGaming(page, urlInstantGame)
 
     const aggregatedData =  humbleBundleGames.concat(instantGaminGames)
     const identifiedData = aggregatedData.map((element)=>{
@@ -37,23 +33,17 @@ const urlInstantGame = `https://www.instant-gaming.com/en/search/?query=${gameNa
         }
     })
     
-    console.log("persist-data");
-    console.log(identifiedData);
     persistGameData(identifiedData)
 
     await browser.close()
-})().catch((error)=>{
-    console.log(error);
-    process.exit(1)
-})
+}
 
-async function getDataFromHumbleBundle(page: Page ): Promise<Omit<GamesData, 'id'>[]>{
-    await page.goto(urlHumbleBundle)
-
+async function getDataFromHumbleBundle(page: Page, url: string ): Promise<Omit<GamesData, 'id'>[]>{
+    await page.goto(url)
     await page.waitForTimeout(2000)
 
-    const data = await page.$$eval("div.entity", (gamesCards)=>{
-
+    const data = await page.$$eval("div.js-entity", (gamesCards)=>{
+        
         function formatPrice (price :string | undefined): number {
             console.log(price);
             if (price === undefined || price.trim() === '') return 0.0
@@ -80,18 +70,12 @@ async function getDataFromHumbleBundle(page: Page ): Promise<Omit<GamesData, 'id
     return data
 }
 
-async function getDataFromInstantGaming(page: Page ): Promise<Omit<GamesData, 'id'>[]>{
-    await page.goto(urlInstantGame)
+async function getDataFromInstantGaming(page: Page, url: string ): Promise<Omit<GamesData, 'id'>[]>{
+    await page.goto(url)
 
-    await page.waitForTimeout(1000)
-    await page.evaluate(()=> window.scroll(0, 400))
-    await page.evaluate(()=> window.scroll(0, 400))
-    await page.evaluate(()=> window.scroll(0, 400))
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(3000)
 
     const data =  await page.$$eval("div.item", (gamesCards)=>{
-
-        console.log(gamesCards.length);
          
         function formatPrice (price :string | undefined): number {
             if (price === undefined || price.trim() === '') return 0.0

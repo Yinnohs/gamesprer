@@ -17,7 +17,7 @@ public class GameInfoController {
 
     @GetMapping("{gameTitle}")
     public ResponseEntity<?> findAllGamesData(@PathVariable("gameTitle")  String gameTitle){
-        var data = service.findGameWhereTitleNameSimilarTo(gameTitle);
+        var data = service.findGameInfoByTitleAndScrap(gameTitle);
         return ResponseEntity.ok(data);
     }
 }
