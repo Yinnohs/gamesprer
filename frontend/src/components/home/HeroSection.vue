@@ -9,7 +9,7 @@ import AppLink from '../link/AppLink.vue'
     <div class="video-docker absolute top-0 left-0 w-full h-full overflow-hidden">
       <video
         class="min-w-full min-h-full absolute object-cover"
-        src="https://cdn.pixabay.com/video/2021/09/27/89894-616430996_large.mp4"
+        src="https://cdn.pixabay.com/video/2021/03/06/67116-521253275_large.mp4"
         type="video/mp4"
         autoplay
         muted
@@ -17,9 +17,13 @@ import AppLink from '../link/AppLink.vue'
       ></video>
     </div>
     <div class="video-content space-y-2 z-10">
-      <h3 class="font-light text-3xl text-zinc-400 text-bold">Que tu bolsillo no llore</h3>
-      <h2 class="font-light text-4xl text-zinc-300 text-bold">Juega sin parar</h2>
-      <h1 class="font-light text-6xl text-zinc-200 text-bold">Gamesprer</h1>
+      <h1
+        class="text-center font-light text-8xl text-bold bg-gradient-to-r from-teal-50 to-teal-400 bg-clip-text text-transparent"
+      >
+        Gamesprer
+      </h1>
+
+      <h3 class="text-2xl text-zinc-700">Comparador de precios</h3>
       <AppLink />
     </div>
   </section>
