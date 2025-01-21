@@ -7,6 +7,7 @@ import {v7 as uuid} from 'uuid'
 
 
 export async function scrapeData(gameName:string){
+    console.log('[INFO]: STARTING SCRAPPING');
     
     const urlHumbleBundle = `https://www.humblebundle.com/store/search?search=${gameName}`;
     const urlInstantGame = `https://www.instant-gaming.com/en/search/?query=${gameName}`
@@ -32,7 +33,7 @@ export async function scrapeData(gameName:string){
             ...element
         }
     })
-    
+    console.log('[INFO]: DATA:', identifiedData);
     persistGameData(identifiedData)
 
     await browser.close()
@@ -54,13 +55,15 @@ async function getDataFromHumbleBundle(page: Page, url: string ): Promise<Omit<G
             const gameUrl = mainCard.querySelector("a")?.href || ''
             const gameTitle = mainCard.querySelector("span.entity-title")?.getHTML() || ''
             const gamePrice = mainCard.querySelector("span.price")?.getHTML() || ''
+            const imageUrl = mainCard.querySelector("img")?.src || ''
 
             return{
                 url: gameUrl,
                 title: gameTitle,
                 price: formatPrice(gamePrice),
                 pageName: 'humbleBundle',
-                scrapedAt : new Date()
+                scrapedAt : new Date(),
+                imageUrl
             }
         })
 
@@ -86,13 +89,15 @@ async function getDataFromInstantGaming(page: Page, url: string ): Promise<Omit<
             const gameUrl = mainCard.querySelector("a")?.href || ''
             const gameTitle = mainCard.querySelector("span.title")?.getHTML() || ''
             const gamePrice = mainCard.querySelector("div.price")?.getHTML() || ''
+            const imageUrl = mainCard.querySelector("img")?.src || ''
 
             return{
                 url: gameUrl,
                 title: gameTitle,
                 price: formatPrice(gamePrice),
                 pageName: 'instantGaming',
-                scrapedAt : new Date()
+                scrapedAt: new Date(),
+                imageUrl: imageUrl
             }
         })
 

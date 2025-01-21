@@ -2,7 +2,9 @@
 import { RouterLink } from 'vue-router'
 </script>
 <template>
-  <div class="flex h-screen w-16 flex-col justify-between border-e border-zinc-700 bg-zinc-800">
+  <div
+    class=" z-50 sticky flex h-screen w-16 flex-col justify-between border-e border-zinc-700 bg-zinc-800"
+  >
     <div>
       <div class="inline-flex size-16 items-center justify-center">
         <span
@@ -12,7 +14,7 @@ import { RouterLink } from 'vue-router'
         </span>
       </div>
 
-      <div class="border-t border-zinc-700">
+      <div>
         <div class="px-2">
           <ul class="space-y-1 border-t border-zinc-700 pt-4">
             <li>
@@ -36,7 +38,7 @@ import { RouterLink } from 'vue-router'
                 </svg>
 
                 <span
-                  class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+                  class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-zinc-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
                 >
                   Home
                 </span>
@@ -56,7 +58,7 @@ import { RouterLink } from 'vue-router'
             }
           "
           type="button"
-          class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-zinc-700 hover:text-zinc-100"
+          class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-zinc-500 hover:bg-zinc-700 hover:text-zinc-100"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +76,7 @@ import { RouterLink } from 'vue-router'
           </svg>
 
           <span
-            class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+            class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-zinc-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
           >
             Logout
           </span>

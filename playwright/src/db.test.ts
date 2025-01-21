@@ -8,7 +8,8 @@ const dataTotest: GamesData[] = [{
     title: 'Hyperdevotion Noire: Goddess Black Heart',
     price: 12.49,
     pageName: 'humbleBundle',
-    scrapedAt: new Date()
+    scrapedAt: new Date(),
+    imageUrl: 'https://some-testing-image'
   },]
 
   persistGameData(dataTotest)

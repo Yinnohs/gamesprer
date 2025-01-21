@@ -1,23 +1,35 @@
+<!-- eslint-disable vue/no-mutating-props -->
+<script setup lang="ts">
+defineProps({
+  value: {
+    type: String,
+    required: true
+  }
+})
+const emit = defineEmits(['update:modelValue'])
+const handleInput = ($event : Event) => {
+  const target = $event.target as HTMLInputElement | null;
+  if (target) {
+    emit('update:modelValue', target.value)
+  }
+}
+</script>
+
 <template>
-  <!--
-    Heads up! 👋
-
-    Plugins:
-      - @tailwindcss/forms
-  -->
-
   <div class="relative">
     <label for="Search" class="sr-only"> Search </label>
 
     <input
       type="text"
       id="Search"
-      placeholder="Search for..."
-      class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+      @input="handleInput"
+      :value="value"
+      placeholder="Buscar juegos..."
+      class="w-full rounded-md text-lg bg-zinc-700 py-4 pe-10 shadow-sm sm:text-sm placeholder:text-center pl-3 text-zinc-300"
     />
 
     <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
-      <button type="button" class="text-gray-600 hover:text-gray-700">
+      <button type="button" class="text-zinc-300 hover:text-zinc-300">
         <span class="sr-only">Search</span>
 
         <svg

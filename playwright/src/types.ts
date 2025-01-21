@@ -5,4 +5,5 @@ export type GamesData = {
     price: number
     pageName: string
     scrapedAt: Date
+    imageUrl: string
 }
