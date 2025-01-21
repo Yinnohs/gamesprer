@@ -1,0 +1,14 @@
+# 1.- First User an official OPENJDK base image from docker hub
+FROM  openjdk:21-jdk-alpine
+
+# 2.- Set the working directory inside the container
+WORKDIR /app
+
+# 3.- Copy the spring boot jar file into the container
+COPY target/gamesprer-[0-9].[0-9].[0-9].jar /app/gamesprer.jar
+
+# 4.- Expose the port
+EXPOSE 5052
+
+# 5.- Run the jar file
+CMD ["java", "-jar", "/app/gamesprer.jar"]
