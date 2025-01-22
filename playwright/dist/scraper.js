@@ -44,9 +44,9 @@ async function getDataFromHumbleBundle(page, url) {
             const imageUrl = mainCard.querySelector("img")?.src || '';
             return {
                 url: gameUrl,
-                title: gameTitle,
+                title: gameTitle.trim().toLocaleLowerCase(),
                 price: formatPrice(gamePrice),
-                pageName: 'humbleBundle',
+                pageName: 'Humble Bundle',
                 scrapedAt: new Date(),
                 imageUrl
             };
@@ -71,9 +71,9 @@ async function getDataFromInstantGaming(page, url) {
             const imageUrl = mainCard.querySelector("img")?.src || '';
             return {
                 url: gameUrl,
-                title: gameTitle,
+                title: gameTitle.trim().toLocaleLowerCase(),
                 price: formatPrice(gamePrice),
-                pageName: 'instantGaming',
+                pageName: 'Instant Gaming',
                 scrapedAt: new Date(),
                 imageUrl: imageUrl
             };

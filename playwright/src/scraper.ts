@@ -2,7 +2,7 @@ import playwright, { type Page } from 'playwright'
 import { getRandom } from 'random-useragent'
 import { type GamesData } from './types.js'
 import { persistGameData } from './db.js'
-import {v7 as uuid} from 'uuid'
+import { v7 as uuid } from 'uuid'
 
 
 
@@ -59,9 +59,9 @@ async function getDataFromHumbleBundle(page: Page, url: string ): Promise<Omit<G
 
             return{
                 url: gameUrl,
-                title: gameTitle,
+                title: gameTitle.trim().toLocaleLowerCase(),
                 price: formatPrice(gamePrice),
-                pageName: 'humbleBundle',
+                pageName: 'Humble Bundle',
                 scrapedAt : new Date(),
                 imageUrl
             }
@@ -93,9 +93,9 @@ async function getDataFromInstantGaming(page: Page, url: string ): Promise<Omit<
 
             return{
                 url: gameUrl,
-                title: gameTitle,
+                title: gameTitle.trim().toLocaleLowerCase(),
                 price: formatPrice(gamePrice),
-                pageName: 'instantGaming',
+                pageName: 'Instant Gaming',
                 scrapedAt: new Date(),
                 imageUrl: imageUrl
             }
