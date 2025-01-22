@@ -27,6 +27,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const userBootstrap = () => {
+    if(!userRef.value && tokenRef.value !== '')return true
     const userString = localStorage.getItem(userLocalStorageKey)
     const token = localStorage.getItem(tokenLocalStorageKey)
     if (!userString || !token) return false

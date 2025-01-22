@@ -25,7 +25,7 @@ const handleInput = ($event : Event) => {
       @input="handleInput"
       :value="value"
       placeholder="Buscar juegos..."
-      class="w-full rounded-md text-lg bg-zinc-700 py-4 pe-10 shadow-sm sm:text-sm placeholder:text-center pl-3 text-zinc-300"
+      class="w-full rounded-md text-lg bg-zinc-700 py-4 pe-10 shadow-sm sm:text-sm placeholder:text-center pl-3 text-zinc-300 focus:border focus:border-teal-500"
     />
 
     <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">

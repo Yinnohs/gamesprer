@@ -7,11 +7,12 @@ import { RouterLink } from 'vue-router'
   >
     <div>
       <div class="inline-flex size-16 items-center justify-center">
-        <span
-          class="grid size-10 place-content-center rounded-lg text-bold bg-zinc-900 text-xs text-zinc-400"
+        <RouterLink
+          to="/"
+          class="grid size-10 place-content-center rounded-lg text-bold bg-zinc-900 text-xs text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 hover:cursor-pointer"
         >
           G
-        </span>
+        </RouterLink>
       </div>
 
       <div>
@@ -19,7 +20,7 @@ import { RouterLink } from 'vue-router'
           <ul class="space-y-1 border-t border-zinc-700 pt-4">
             <li>
               <RouterLink
-                to="/home"
+                to="/"
                 class="group relative flex justify-center rounded px-2 py-1.5 text-zinc-100 hover:bg-zinc-700"
               >
                 <svg

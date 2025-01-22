@@ -6,21 +6,45 @@ import type { Game } from '@/classes/Game';
 import axios from 'axios';
 import { useUserStore } from '@/stores/user';
 import AppButton from '@/components/buttons/AppButton.vue';
+import { useLink } from 'vue-router';
 
-const { tokenRef } = useUserStore()
+const { tokenRef, userBootstrap } = useUserStore()
+const link = useLink({
+  to: '/login'
+})
 const gamesData = ref<Game[]>([])
 const gameTitle = ref('')
+const isLoading = ref(false)
+
+const checkStoragedUser = (): boolean => {
+  isLoading.value = true
+  if (tokenRef === ''){
+      if(!userBootstrap()){
+        return false
+      }
+    }
+    return true
+}
 
 const fetchGames = async () => {
   try {
+    if (!gameTitle.value) return
+    if (!checkStoragedUser()) {
+      link.navigate()
+      return
+    }
+
     const response = await axios.get(`/api/gameinfo/${gameTitle.value}`, {
       headers: {
         Authorization: `Bearer ${tokenRef}`
       }
     })
+    gameTitle.value = ''
     gamesData.value = response.data
   } catch (error) {
     console.error(error)
+  }finally{
+    isLoading.value = false
   }
 }
 
@@ -34,10 +58,13 @@ const fetchGames = async () => {
         <FindInput :value="gameTitle" @update:modelValue="gameTitle = $event" />
         <AppButton> Buscar</AppButton>
       </div>
-
     </form>
-    <div class="overflow-y-scroll grid grid-cols-4 gap-4 py-6 w-full h-[90%] justify-items-center">
-      <GameCard v-for="game in gamesData" v-bind:key="game.id" :game="game"/>
+    <div v-if="isLoading">
+      <h1>Buscando Juegos...</h1>
+    </div>
+
+    <div class="overflow-y-scroll grid grid-cols-1 gap-7 py-6 w-full h-[90%] justify-items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <GameCard v-for="game in gamesData" v-bind:key="game.id" :game="game as Game"/>
     </div>
   </section>
 </template>
