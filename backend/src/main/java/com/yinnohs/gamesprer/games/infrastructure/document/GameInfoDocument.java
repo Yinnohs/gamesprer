@@ -23,5 +23,6 @@ public class GameInfoDocument {
     @Field(targetType = DECIMAL128)
     private BigDecimal price;
     private String pageName;
+    private String imageUrl;
     private LocalDateTime scrapedAt;
 }

@@ -17,6 +17,7 @@ public class GameInfo {
     private String title;
     private BigDecimal price;
     private String pageName;
+    private String imageUrl;
     private LocalDateTime scrapedAt;
 
 }

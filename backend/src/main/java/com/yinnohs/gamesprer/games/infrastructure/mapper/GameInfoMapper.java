@@ -16,6 +16,7 @@ public class GameInfoMapper {
                 .price(gameInfo.getPrice())
                 .pageName(gameInfo.getPageName())
                 .scrapedAt(gameInfo.getScrapedAt())
+                .imageUrl(gameInfo.getImageUrl())
                 .build();
     }
 
@@ -27,6 +28,7 @@ public class GameInfoMapper {
                 .url(gameInfo.getUrl())
                 .price(gameInfo.getPrice())
                 .pageName(gameInfo.getPageName())
+                .imageUrl(gameInfo.getImageUrl())
                 .scrapedAt(gameInfo.getScrapedAt())
                 .build();
     }

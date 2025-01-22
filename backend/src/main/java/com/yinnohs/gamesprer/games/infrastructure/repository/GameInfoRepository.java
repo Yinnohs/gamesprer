@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface GameInfoRepository extends MongoRepository<GameInfo ,String> {
-    @Query("{'title': { '$regex': '?0', '$options': 'i' }, 'scrapedAt': { $gte: ?1 }}")
+    @Query(value = "{ 'title': { '$regex': '?0', '$options': 'i' }, 'scrapedAt': { $gte: ?1 }, 'price':{ $gte: 0.5 } }", sort = "{ 'price': 1 }")
     List<GameInfoDocument> findInfoWithSimilarTitle(String gameTitle, Date currentDayHour);
 
     @Query("{'scrapedAt': { $gte: ?0 }}")
