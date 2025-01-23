@@ -1,5 +1,5 @@
 # 1.- First User an official OPENJDK base image from docker hub
-FROM  openjdk:21-jdk-alpine
+FROM  openjdk:17-jdk-alpine
 
 # 2.- Set the working directory inside the container
 WORKDIR /app
