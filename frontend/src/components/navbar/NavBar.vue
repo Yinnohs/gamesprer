@@ -1,9 +1,20 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { RouterLink, useLink } from 'vue-router'
+import { useUserStore } from '@/user/store/user.store'
+
+const { cleanUserInformation } = useUserStore()
+const link = useLink({
+  to: '/',
+})
+
+const logout = () => {
+  cleanUserInformation()
+  link.navigate()
+}
 </script>
 <template>
   <div
-    class=" z-50 sticky flex h-screen w-16 flex-col justify-between border-e border-zinc-700 bg-zinc-800"
+    class="z-50 sticky flex h-screen w-16 flex-col justify-between border-e border-zinc-700 bg-zinc-800"
   >
     <div>
       <div class="inline-flex size-16 items-center justify-center">
@@ -53,11 +64,7 @@ import { RouterLink } from 'vue-router'
     <div class="sticky inset-x-0 bottom-0 border-t border-zinc-700 bg-zinc-800 p-2">
       <form action="#">
         <button
-          @click="
-            () => {
-              console.log('Logout')
-            }
-          "
+          @click="logout"
           type="button"
           class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-zinc-500 hover:bg-zinc-700 hover:text-zinc-100"
         >

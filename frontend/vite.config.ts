@@ -9,7 +9,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   plugins: [vue(), vueJsx(), vueDevTools()],
   server: {
-    port: 3000,
+    port: 8080,
     proxy: {
       '/api': {
         target: 'http://localhost:5052/api/v1',

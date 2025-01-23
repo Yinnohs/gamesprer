@@ -2,6 +2,7 @@ import { MongoClient } from "mongodb"
 import { type GamesData } from "./types.js"
 
 
+
 export  async function persistGameData(gameData: GamesData[]){
     const uri = process.env.MONGO_DB_URL || 'mongodb://127.0.0.1:27017/gamesprer'
     const client = new MongoClient(uri,{

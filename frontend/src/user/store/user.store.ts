@@ -7,6 +7,11 @@ const userLocalStorageKey = 'user'
 const tokenLocalStorageKey = 'token'
 
 export const useUserStore = defineStore('user', () => {
+  const resetStoreReferences = () => {
+    userRef.value = {} as AppUser
+    tokenRef.value = ''
+  }
+
   const userRef = ref<AppUser>({} as AppUser)
   const tokenRef = ref<string>('')
 
@@ -27,7 +32,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const userBootstrap = () => {
-    if(!userRef.value && tokenRef.value !== '')return true
+    if (!userRef.value && tokenRef.value !== '') return true
     const userString = localStorage.getItem(userLocalStorageKey)
     const token = localStorage.getItem(tokenLocalStorageKey)
     if (!userString || !token) return false
@@ -36,5 +41,23 @@ export const useUserStore = defineStore('user', () => {
     return true
   }
 
-  return { userRef, tokenRef, setToken, setUser, isUserActive, userBootstrap }
+  const cleanUserDataFromLocalStorage = () => {
+    localStorage.removeItem(userLocalStorageKey)
+    localStorage.removeItem(tokenLocalStorageKey)
+  }
+
+  const cleanUserInformation = () => {
+    cleanUserDataFromLocalStorage()
+    resetStoreReferences()
+  }
+
+  return {
+    userRef,
+    tokenRef,
+    setToken,
+    setUser,
+    isUserActive,
+    userBootstrap,
+    cleanUserInformation,
+  }
 })

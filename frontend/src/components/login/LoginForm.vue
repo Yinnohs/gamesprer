@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/user/store/user.store'
 import type { LoginResponse, UserLogin } from '@/classes/Auth'
 import { z } from 'zod'
 import axios from 'axios'

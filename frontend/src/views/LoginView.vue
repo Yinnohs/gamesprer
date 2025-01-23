@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import LoginForm from '@/components/login/LoginForm.vue'
 import {onMounted} from 'vue'
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/user/store/user.store';
 import {useLink} from 'vue-router'
 
 const {userBootstrap} = useUserStore()

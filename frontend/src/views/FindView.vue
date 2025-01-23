@@ -4,7 +4,7 @@ import GameCard from '@/components/card/GameCard.vue'
 import FindInput from '@/components/input/FindInput.vue'
 import type { Game } from '@/classes/Game';
 import axios from 'axios';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/user/store/user.store';
 import AppButton from '@/components/buttons/AppButton.vue';
 import { useLink } from 'vue-router';
 
