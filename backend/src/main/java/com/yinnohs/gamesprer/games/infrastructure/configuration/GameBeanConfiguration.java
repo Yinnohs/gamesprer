@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.yinnohs.gamesprer.games.application.usecases.FindGamesBySimilarTitle;
 import com.yinnohs.gamesprer.games.domain.ports.in.GameService;
+import com.yinnohs.gamesprer.games.domain.ports.out.ApiService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,8 +13,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GameBeanConfiguration {
     private final GameService service;
+    private final ApiService apiService;
     @Bean
     public FindGamesBySimilarTitle findGamesBySimilarTitle() {
-        return new FindGamesBySimilarTitle(service);
+        return new FindGamesBySimilarTitle(service, apiService);
     }
 }

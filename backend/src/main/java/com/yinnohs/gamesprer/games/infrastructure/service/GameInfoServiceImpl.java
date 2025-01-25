@@ -25,11 +25,6 @@ public class GameInfoServiceImpl implements GameService {
     public List<Game> findGameBySimilarTitle(String gameTitle) {
         var gameList = findGameWhereTitleNameSimilarTo(gameTitle);
 
-        if (gameList.isEmpty()){
-            executeScraper(gameTitle);
-            gameList = findGameWhereTitleNameSimilarTo(gameTitle);
-        }
-
         return  gameList;
     }
 
@@ -51,13 +46,7 @@ public class GameInfoServiceImpl implements GameService {
                 .toList();
     }
 
-    private void executeScraper(String gameTitle){
-        try {
-            httpService.signalScraper(gameTitle);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    
 
     private Date getCurrentDate (){
         var currentDate =  LocalDateTime.now()
