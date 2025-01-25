@@ -1,6 +1,6 @@
 package com.yinnohs.gamesprer.games.infrastructure.mapper;
 
-import com.yinnohs.gamesprer.games.domain.Game;
+import com.yinnohs.gamesprer.games.domain.model.Game;
 import com.yinnohs.gamesprer.games.infrastructure.document.GameDocument;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.yinnohs.gamesprer.games.domain;
+package com.yinnohs.gamesprer.games.domain.ports.out;
 
 public interface ApiService {
     public String signalScraper(String gameTitle);

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.yinnohs.gamesprer.games.domain.ApiService;
+import com.yinnohs.gamesprer.games.domain.ports.out.ApiService;
 
 @Service
 public class ApiServiceImpl implements ApiService {

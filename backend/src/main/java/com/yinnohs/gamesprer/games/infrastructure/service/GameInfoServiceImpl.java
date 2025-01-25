@@ -1,8 +1,8 @@
 package com.yinnohs.gamesprer.games.infrastructure.service;
 
-import com.yinnohs.gamesprer.games.domain.ApiService;
-import com.yinnohs.gamesprer.games.domain.Game;
-import com.yinnohs.gamesprer.games.domain.GameService;
+import com.yinnohs.gamesprer.games.domain.model.Game;
+import com.yinnohs.gamesprer.games.domain.ports.in.GameService;
+import com.yinnohs.gamesprer.games.domain.ports.out.ApiService;
 import com.yinnohs.gamesprer.games.infrastructure.mapper.GameMapper;
 import com.yinnohs.gamesprer.games.infrastructure.repository.GameDocumentRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,6 @@ public class GameInfoServiceImpl implements GameService {
     private final GameDocumentRepository repository;
     private final GameMapper mapper;
     private final ApiService httpService;
-
 
     @Override
     public List<Game> findGameBySimilarTitle(String gameTitle) {

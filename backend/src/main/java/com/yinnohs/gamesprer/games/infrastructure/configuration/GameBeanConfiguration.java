@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.yinnohs.gamesprer.games.application.usecases.FindGamesBySimilarTitle;
-import com.yinnohs.gamesprer.games.domain.GameService;
+import com.yinnohs.gamesprer.games.domain.ports.in.GameService;
 
 import lombok.RequiredArgsConstructor;
 

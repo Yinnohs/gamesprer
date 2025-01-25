@@ -1,12 +1,13 @@
 package com.yinnohs.gamesprer.games.infrastructure.controller;
 
-import com.yinnohs.gamesprer.games.domain.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.yinnohs.gamesprer.games.domain.ports.in.GameService;
 
 @RestController
 @RequestMapping("/api/v1/gameinfo")

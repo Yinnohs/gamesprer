@@ -2,8 +2,8 @@ package com.yinnohs.gamesprer.games.application.usecases;
 
 import java.util.List;
 
-import com.yinnohs.gamesprer.games.domain.Game;
-import com.yinnohs.gamesprer.games.domain.GameService;
+import com.yinnohs.gamesprer.games.domain.model.Game;
+import com.yinnohs.gamesprer.games.domain.ports.in.GameService;
 
 import lombok.RequiredArgsConstructor;
 

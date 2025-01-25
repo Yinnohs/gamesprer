@@ -1,4 +1,4 @@
-package com.yinnohs.gamesprer.games.domain;
+package com.yinnohs.gamesprer.games.domain.model;
 
 
 import lombok.*;
