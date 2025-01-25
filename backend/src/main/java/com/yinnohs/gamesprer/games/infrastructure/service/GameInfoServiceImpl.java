@@ -2,7 +2,7 @@ package com.yinnohs.gamesprer.games.infrastructure.service;
 
 import com.yinnohs.gamesprer.games.domain.model.Game;
 import com.yinnohs.gamesprer.games.domain.ports.in.GameService;
-import com.yinnohs.gamesprer.games.domain.ports.out.ApiService;
+
 import com.yinnohs.gamesprer.games.infrastructure.mapper.GameMapper;
 import com.yinnohs.gamesprer.games.infrastructure.repository.GameDocumentRepository;
 import lombok.RequiredArgsConstructor;
