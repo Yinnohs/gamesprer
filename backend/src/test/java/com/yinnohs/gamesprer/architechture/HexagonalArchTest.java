@@ -15,6 +15,7 @@ public class HexagonalArchTest {
     private final String DOMAIN_PACKAGES = "..domain..";
     private final String APPLICATION_PACKAGES =  "..application..";
     private final String LOMBOK = "lombok..";
+    private final boolean ALLOW_EMPTY_RULES = true;
     private  JavaClasses importedClasses = new ClassFileImporter().importPackages(BASE_PACKAGE);
 
      @Test
@@ -25,7 +26,7 @@ public class HexagonalArchTest {
                 .dependOnClassesThat()
                 .resideOutsideOfPackages(DOMAIN_PACKAGES, JAVA_PACKAGES, LOMBOK);
 
-        domainRule.allowEmptyShould(true).check(importedClasses);
+        domainRule.allowEmptyShould(ALLOW_EMPTY_RULES).check(importedClasses);
     }
 
     @Test
@@ -36,6 +37,6 @@ public class HexagonalArchTest {
                 .dependOnClassesThat()
                 .resideOutsideOfPackages(DOMAIN_PACKAGES, JAVA_PACKAGES, LOMBOK, APPLICATION_PACKAGES);
 
-        domainRule.allowEmptyShould(true).check(importedClasses);
+        domainRule.allowEmptyShould(ALLOW_EMPTY_RULES).check(importedClasses);
     }
 }
