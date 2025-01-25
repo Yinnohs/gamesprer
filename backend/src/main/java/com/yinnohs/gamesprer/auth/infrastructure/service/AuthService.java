@@ -3,6 +3,7 @@ package com.yinnohs.gamesprer.auth.infrastructure.service;
 import com.yinnohs.gamesprer.user.domain.port.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,12 +22,16 @@ import java.util.stream.Collectors;
 public class AuthService {
 
     private final JwtEncoder jwtEncoder;
+    @SuppressWarnings("unused")
     private final PasswordEncoder passwordEncoder;
+    @SuppressWarnings("unused")
     private final UserRepository userRepository;
+
+     
 
     public String generateToken(Authentication authentication){
         String scope = getScopeFromAuthentication(authentication);
-        var claims = getClaims("http//127.0.0.1:5052", authentication.getName(), scope);
+        var claims = getClaims("gamesprer", authentication.getName(), scope);
         return  jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
