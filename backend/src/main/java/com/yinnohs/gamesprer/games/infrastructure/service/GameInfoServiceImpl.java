@@ -1,5 +1,6 @@
 package com.yinnohs.gamesprer.games.infrastructure.service;
 
+import com.yinnohs.gamesprer.games.domain.ApiService;
 import com.yinnohs.gamesprer.games.domain.Game;
 import com.yinnohs.gamesprer.games.domain.GameService;
 import com.yinnohs.gamesprer.games.infrastructure.mapper.GameMapper;
@@ -18,7 +19,7 @@ public class GameInfoServiceImpl implements GameService {
 
     private final GameDocumentRepository repository;
     private final GameMapper mapper;
-    private final ApiService api;
+    private final ApiService httpService;
 
 
     @Override
@@ -53,7 +54,7 @@ public class GameInfoServiceImpl implements GameService {
 
     private void executeScraper(String gameTitle){
         try {
-            api.callExternalApi(gameTitle);
+            httpService.signalScraper(gameTitle);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
