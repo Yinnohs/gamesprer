@@ -19,7 +19,6 @@ public class GameInfoServiceImpl implements GameService {
 
     private final GameDocumentRepository repository;
     private final GameMapper mapper;
-    private final ApiService httpService;
 
     @Override
     public List<Game> findGameBySimilarTitle(String gameTitle) {
