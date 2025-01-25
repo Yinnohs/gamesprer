@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import GameCard from '@/components/card/GameCard.vue'
 import FindInput from '@/components/input/FindInput.vue'
 import type { Game } from '@/classes/Game';
-import axios from 'axios';
 import { useUserStore } from '@/user/store/user.store';
 import AppButton from '@/components/buttons/AppButton.vue';
 import { useLink } from 'vue-router';
+import { UseAdaptersStore } from '@/adapters/store/adapters.store';
 
 const { tokenRef, userBootstrap } = useUserStore()
+const { httpClient } = UseAdaptersStore()
 const link = useLink({
   to: '/login'
 })
@@ -17,7 +18,6 @@ const gameTitle = ref('')
 const isLoading = ref(false)
 
 const checkStoragedUser = (): boolean => {
-  isLoading.value = true
   if (tokenRef === ''){
       if(!userBootstrap()){
         return false
@@ -26,36 +26,46 @@ const checkStoragedUser = (): boolean => {
     return true
 }
 
-const fetchGames = async () => {
+const fetchGames = async (gameTitle :string) => {
   try {
-    if (!gameTitle.value) return
-    if (!checkStoragedUser()) {
-      link.navigate()
-      return
-    }
+    if (!gameTitle) return
 
-    const response = await axios.get(`/api/gameinfo/${gameTitle.value}`, {
-      headers: {
-        Authorization: `Bearer ${tokenRef}`
-      }
-    })
-    gameTitle.value = ''
-    gamesData.value = response.data
+    const url = `/api/gameinfo/${gameTitle}`
+    const response = await httpClient.get<Game[]>(url, tokenRef)
+
+    return response
   } catch (error) {
     console.error(error)
-  }finally{
-    isLoading.value = false
   }
 }
+
+const handleFindGames = async() => {
+  if (!gameTitle.value)return
+  isLoading.value = true
+  const games =  await fetchGames(gameTitle.value)
+  isLoading.value = false
+  if(!games){
+    console.log('should thorw an error');
+    return
+  }
+
+}
+
+
+onMounted(() => {
+  if(!checkStoragedUser()){
+    link.navigate()
+  }
+})
 
 </script>
 
 <template>
   <section class="flex flex-col w-full h-screen justify-around items-center">
-    <form @submit.prevent="fetchGames" class="flex w-[50%] px-12 py-6 flex-col justify-center items-center pb-4 shadow-zinc-900 gap-2">
+    <form @submit.prevent="handleFindGames" class="flex w-[50%] px-12 py-6 flex-col justify-center items-center pb-4 shadow-zinc-900 gap-2">
       <h1 class="text-4xl text-teal-500">Busca un juego</h1>
       <div class="flex flex-row gap-4 w-full items-center justify-center">
-        <FindInput :value="gameTitle" @update:modelValue="gameTitle = $event" />
+        <FindInput :value="gameTitle" @update:modelValue="gameTitle = $event" :isLoading="isLoading" />
         <AppButton> Buscar</AppButton>
       </div>
     </form>

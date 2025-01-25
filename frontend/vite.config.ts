@@ -12,7 +12,7 @@ export default defineConfig({
     port: 8080,
     proxy: {
       '/api': {
-        target: 'http://localhost:5052/api/v1',
+        target: process.env.BACKEND_URL || 'http://localhost:5052/api/v1',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

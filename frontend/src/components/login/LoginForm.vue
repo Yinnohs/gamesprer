@@ -3,11 +3,12 @@ import { reactive } from 'vue'
 import { useUserStore } from '@/user/store/user.store'
 import type { LoginResponse, UserLogin } from '@/classes/Auth'
 import { z } from 'zod'
-import axios from 'axios'
 import { loginSchema } from '@/schema/LoginSchema'
 import { useLink } from 'vue-router'
+import { UseAdaptersStore } from '@/adapters/store/adapters.store'
 
 const { setUser, setToken } = useUserStore()
+const { httpClient } = UseAdaptersStore()
 const navigation = useLink({ to: '/find' })
 type UserLoginKeys = keyof UserLogin
 
@@ -40,11 +41,14 @@ const checkFormPayload = (formData: UserLogin): boolean => {
 const handleSubmit = async () => {
   if (!checkFormPayload(loginForm)) return
 
+  const url = '/api/auth/login'
+
+
   try {
-    const request = await axios.post('/api/auth/login', loginForm)
-    const payload: LoginResponse = request.data
-    setToken(payload.token)
-    setUser(payload.user)
+    const response = await httpClient.post<UserLogin,LoginResponse>(url, null, loginForm)
+    setToken(response.token)
+    setUser(response.user)
+
     navigation.navigate()
   } catch (error) {
     console.log(error)

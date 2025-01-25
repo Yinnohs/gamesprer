@@ -4,6 +4,11 @@ defineProps({
   value: {
     type: String,
     required: true
+  },
+  isLoading: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 const emit = defineEmits(['update:modelValue'])
@@ -24,8 +29,9 @@ const handleInput = ($event : Event) => {
       id="Search"
       @input="handleInput"
       :value="value"
+      :disabled="isLoading"
       placeholder="Buscar juegos..."
-      class="w-full rounded-md text-lg bg-zinc-700 py-4 pe-10 shadow-sm sm:text-sm placeholder:text-center pl-3 text-zinc-300 focus:border focus:border-teal-500"
+      class="w-full rounded-md text-lg text-teal-500 bg-zinc-700 py-4 pe-10 shadow-sm sm:text-sm placeholder:text-center pl-3 focus:border focus:border-teal-500"
     />
 
     <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">

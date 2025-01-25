@@ -11,7 +11,7 @@ export async function persistGameData(gameData) {
     try {
         await client.connect();
         const database = client.db('gamesprer');
-        const collection = database.collection('gameInfo');
+        const collection = database.collection('games');
         const result = await collection.insertMany(gameData);
         return result;
     }
