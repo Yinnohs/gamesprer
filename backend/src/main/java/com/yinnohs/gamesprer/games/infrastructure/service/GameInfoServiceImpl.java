@@ -1,30 +1,28 @@
 package com.yinnohs.gamesprer.games.infrastructure.service;
 
-import com.yinnohs.gamesprer.games.domain.GameInfo;
-import com.yinnohs.gamesprer.games.domain.GameInfoService;
-import com.yinnohs.gamesprer.games.infrastructure.mapper.GameInfoMapper;
-import com.yinnohs.gamesprer.games.infrastructure.repository.GameInfoRepository;
+import com.yinnohs.gamesprer.games.domain.Game;
+import com.yinnohs.gamesprer.games.domain.GameService;
+import com.yinnohs.gamesprer.games.infrastructure.mapper.GameMapper;
+import com.yinnohs.gamesprer.games.infrastructure.repository.GameDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GameInfoServiceImpl implements GameInfoService {
+public class GameInfoServiceImpl implements GameService {
 
-    private final GameInfoRepository repository;
-    private final GameInfoMapper mapper;
+    private final GameDocumentRepository repository;
+    private final GameMapper mapper;
     private final ApiService api;
 
 
     @Override
-    public List<GameInfo> findGameInfoByTitleAndScrap(String gameTitle) {
+    public List<Game> findGameBySimilarTitle(String gameTitle) {
         var gameList = findGameWhereTitleNameSimilarTo(gameTitle);
 
         if (gameList.isEmpty()){
@@ -36,7 +34,7 @@ public class GameInfoServiceImpl implements GameInfoService {
     }
 
     @Override
-    public List<GameInfo> findAllGamesFromToday() {
+    public List<Game> findAllGamesFromToday() {
         var currentDate = getCurrentDate();
         return repository
                 .findCurrentDateGameInfo(currentDate)
@@ -45,9 +43,9 @@ public class GameInfoServiceImpl implements GameInfoService {
                 .toList();
     }
 
-    private List<GameInfo> findGameWhereTitleNameSimilarTo(String gameTitle) {
+    private List<Game> findGameWhereTitleNameSimilarTo(String gameTitle) {
         var currentDate = getCurrentDate();
-        return repository.findInfoWithSimilarTitle(gameTitle+".*", currentDate )
+        return repository.findInfoWithSimilarTitle(gameTitle + ".*", currentDate )
                 .stream()
                 .map(mapper::toDomainModel)
                 .toList();
@@ -62,7 +60,6 @@ public class GameInfoServiceImpl implements GameInfoService {
     }
 
     private Date getCurrentDate (){
-
         var currentDate =  LocalDateTime.now()
                 .withHour(0)
                 .withMinute(0)

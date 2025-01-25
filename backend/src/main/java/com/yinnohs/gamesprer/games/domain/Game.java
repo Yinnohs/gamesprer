@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GameInfo {
+public class Game {
     private String id;
     private String url;
     private String title;

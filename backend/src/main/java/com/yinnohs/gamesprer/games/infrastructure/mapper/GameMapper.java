@@ -1,14 +1,14 @@
 package com.yinnohs.gamesprer.games.infrastructure.mapper;
 
-import com.yinnohs.gamesprer.games.domain.GameInfo;
-import com.yinnohs.gamesprer.games.infrastructure.document.GameInfoDocument;
+import com.yinnohs.gamesprer.games.domain.Game;
+import com.yinnohs.gamesprer.games.infrastructure.document.GameDocument;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GameInfoMapper {
+public class GameMapper {
 
-    public GameInfoDocument toDocument(GameInfo gameInfo){
-        return GameInfoDocument
+    public GameDocument toDocument(Game gameInfo){
+        return GameDocument
                 .builder()
                 .id(gameInfo.getId())
                 .title(gameInfo.getTitle())
@@ -20,8 +20,8 @@ public class GameInfoMapper {
                 .build();
     }
 
-    public GameInfo toDomainModel(GameInfoDocument gameInfo){
-        return GameInfo
+    public Game toDomainModel(GameDocument gameInfo){
+        return Game
                 .builder()
                 .id(gameInfo.getId())
                 .title(gameInfo.getTitle())
