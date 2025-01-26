@@ -40,12 +40,10 @@ const checkFormPayload = (formData: UserLogin): boolean => {
 
 const handleSubmit = async () => {
   if (!checkFormPayload(loginForm)) return
-
   const url = '/api/auth/login'
 
-
   try {
-    const response = await httpClient.post<UserLogin,LoginResponse>(url, null, loginForm)
+    const response = await httpClient.post<UserLogin , LoginResponse>(url, null, loginForm)
     setToken(response.token)
     setUser(response.user)
 

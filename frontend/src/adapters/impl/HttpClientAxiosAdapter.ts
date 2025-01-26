@@ -1,11 +1,15 @@
-import axios from "axios"
+import axios, { type AxiosInstance } from "axios"
 import type { HttpClientAdapter } from "@/adapters/definition/HttpClientAdapter"
 
-export class HttpClientAdapterImpl implements HttpClientAdapter{
-  private readonly client = axios.create()
+export class HttpClientAxiosAdapterImpl implements HttpClientAdapter{
+  private readonly client :AxiosInstance;
+
+  constructor(){
+    this.client = axios.create()
+  }
+
 
   async get<Expected>( url: string, token: string| null = null  ) :Promise<Expected>{
-
     let options = {}
 
     if(token  !== null){
@@ -16,13 +20,14 @@ export class HttpClientAdapterImpl implements HttpClientAdapter{
       }
     }
 
-    return (await axios.get(url, options)).data
+    return (await this.client.get(url, options)).data
   }
 
   async post<Payload, Expected>( url: string, token: string | null = null, body: Payload ) :Promise<Expected>{
     let options = {}
-
+    debugger;
     if(token  !== null){
+      debugger;
       options = {
         headers: {
           Authorization: `Bearer ${token}`
@@ -30,7 +35,7 @@ export class HttpClientAdapterImpl implements HttpClientAdapter{
       }
     }
 
-    return (await axios.post(url, body, options)).data
+    return (await this.client.post(url, body, options)).data
   }
 
   async delete<Expected>(url: string, token: string | null = null) : Promise<Expected>{
@@ -44,7 +49,7 @@ export class HttpClientAdapterImpl implements HttpClientAdapter{
       }
     }
 
-    return (await axios.delete(url, options)).data
+    return (await this.client.delete(url, options)).data
   }
 
   async put<Payload, Expected>( url: string, token: string | null = null, body: Payload) :Promise<Expected>{
@@ -58,6 +63,6 @@ export class HttpClientAdapterImpl implements HttpClientAdapter{
       }
     }
 
-    return (await axios.post(url, body, options)).data
+    return (await this.client.post(url, body, options)).data
   }
 }

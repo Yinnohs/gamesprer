@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
 import type { HttpClientAdapter } from "../definition/HttpClientAdapter";
-import { HttpClientAdapterImpl } from "../impl/HttpClientAxiosAdapter";
+import { HttpClientAxiosAdapterImpl} from "../impl/HttpClientAxiosAdapter";
+import { reactive, type Reactive, } from "vue";
 
 
-export const UseAdaptersStore = defineStore('adapters', ()=>{
+export const UseAdaptersStore = defineStore('adapters', ()=> {
 
-  const httpClient: HttpClientAdapter = new HttpClientAdapterImpl()
+  const httpClient: Reactive<HttpClientAdapter> = reactive(new HttpClientAxiosAdapterImpl())
 
-  return {httpClient}
+  return { httpClient }
 })

@@ -32,7 +32,6 @@ const fetchGames = async (gameTitle :string) => {
 
     const url = `/api/gameinfo/${gameTitle}`
     const response = await httpClient.get<Game[]>(url, tokenRef)
-
     return response
   } catch (error) {
     console.error(error)
@@ -48,7 +47,7 @@ const handleFindGames = async() => {
     console.log('should thorw an error');
     return
   }
-
+  gamesData.value = games
 }
 
 
