@@ -5,49 +5,55 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.containers.MongoDBContainer;
 
 import com.yinnohs.gamesprer.games.application.usecases.FindGamesBySimilarTitle;
 import com.yinnohs.gamesprer.games.domain.model.Game;
 import com.yinnohs.gamesprer.games.domain.ports.in.GameService;
 import com.yinnohs.gamesprer.games.domain.ports.out.ApiService;
+import com.yinnohs.gamesprer.games.infrastructure.mapper.GameMapper;
+import com.yinnohs.gamesprer.games.infrastructure.repository.GameDocumentRepository;
 
 @SpringBootTest
 public class UseCaseTests {
 
     private final String TEST_URL = "https://www.instant-gaming.com/pt/1234-comprar-key-gog-the-witcher-3-wild-hunt-game-of-the-year-edition/";
     private final String TEST_IMAGE_URL = "https://www.instant-gaming.com/pt/1234-comprar-key-gog-the-witcher-3-wild-hunt-game-of-the-year-edition/";
-    private final MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.0.10");
+
     
+    private ApiService apiService = Mockito.mock(ApiService.class); ;
     @Autowired
-    private ApiService apiService;
-    private GameService mockGameService = Mockito.mock(GameService.class);;
+    private GameService gameService;
+    @Autowired
+    private GameMapper mapper;
+    @Autowired
+    private GameDocumentRepository gameDocumentRepository; 
     
     
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
-        mongoDBContainer.start();
-        String connectioString = mongoDBContainer.getConnectionString();
-        System.setProperty("spring.data.mongodb.uri", connectioString);
-        
+        insertGames();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        deleteAllGames();
     }
 
     @Test
     public void should_return_all_games_when_passed_similar_title() {
         //given
-        var games = createListToTest();
         var gameTitleToFind = "witcher";
-        int expectedGamesSize = games.size();
-        FindGamesBySimilarTitle findGamesBySimilarTitleUseCase = new FindGamesBySimilarTitle(mockGameService, apiService);
-        Mockito.when(mockGameService.findGameBySimilarTitle(gameTitleToFind)).thenReturn(games);
-
+        int expectedGamesSize = 5;
+        FindGamesBySimilarTitle findGamesBySimilarTitleUseCase = new FindGamesBySimilarTitle(gameService, apiService);
+        Mockito.when(apiService.signalScraper(gameTitleToFind)).thenReturn("ok");
         //when
         var result = findGamesBySimilarTitleUseCase.execute(gameTitleToFind);
 
@@ -76,6 +82,15 @@ public class UseCaseTests {
             createGame("The Witcher 1 Olivus", TEST_URL, TEST_IMAGE_URL),
             createGame("The Tintwitch Witcher 1", TEST_URL, TEST_IMAGE_URL)
         );
+    }
+
+    private void  insertGames(){
+        var games = createListToTest().stream().map(mapper::toDocument).toList();
+        gameDocumentRepository.saveAll(games);
+    }
+
+    private void deleteAllGames(){
+        gameDocumentRepository.deleteAll();
     }
     
 }

@@ -1,12 +1,14 @@
 package com.yinnohs.gamesprer.architechture;
 
-import org.junit.Test;
+
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.lang.ArchRule;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
+
+import org.junit.jupiter.api.Test;
 
 @AnalyzeClasses(packages = "com.yinnohs.gamesprer")
 public class HexagonalArchTest {

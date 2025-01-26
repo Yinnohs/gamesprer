@@ -22,9 +22,11 @@ public class GameInfoServiceImpl implements GameService {
 
     @Override
     public List<Game> findGameBySimilarTitle(String gameTitle) {
-        var gameList = findGameWhereTitleNameSimilarTo(gameTitle);
-
-        return  gameList;
+        var currentDate = getCurrentDate();
+        return repository.findInfoWithSimilarTitle(gameTitle , currentDate )
+                .stream()
+                .map(mapper::toDomainModel)
+                .toList();
     }
 
     @Override
@@ -36,16 +38,6 @@ public class GameInfoServiceImpl implements GameService {
                 .map(mapper::toDomainModel)
                 .toList();
     }
-
-    private List<Game> findGameWhereTitleNameSimilarTo(String gameTitle) {
-        var currentDate = getCurrentDate();
-        return repository.findInfoWithSimilarTitle(gameTitle + ".*", currentDate )
-                .stream()
-                .map(mapper::toDomainModel)
-                .toList();
-    }
-
-    
 
     private Date getCurrentDate (){
         var currentDate =  LocalDateTime.now()
