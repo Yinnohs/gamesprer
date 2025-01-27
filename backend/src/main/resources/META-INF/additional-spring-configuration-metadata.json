@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "rsa.private-key",
+    "type": "java.lang.String",
+    "description": "A description for 'rsa.private-key'"
+  },
+  {
+    "name": "rsa.public-key",
+    "type": "java.lang.String",
+    "description": "A description for 'rsa.public-key'"
+  },
+  {
+    "name": "argon2.memory",
+    "type": "java.lang.String",
+    "description": "A description for 'argon2.memory'"
+  },
+  {
+    "name": "argon2.iterations",
+    "type": "java.lang.String",
+    "description": "A description for 'argon2.iterations'"
+  },
+  {
+    "name": "argon2.parallelism",
+    "type": "java.lang.String",
+    "description": "A description for 'argon2.parallelism'"
+  },
+  {
+    "name": "argon2.saltLength",
+    "type": "java.lang.String",
+    "description": "A description for 'argon2.saltLength'"
+  },
+  {
+    "name": "api.url",
+    "type": "java.lang.String",
+    "description": "A description for 'api.url'"
+  }
+]}
