@@ -62,6 +62,20 @@ public class UseCaseTests {
         Assertions.assertEquals(expectedGamesSize, result.size());
     }
 
+    @Test
+    public void should_return_no_games_when_passed_title_with_no_ocurrencies() {
+        //given
+        var gameTitleToFind = "nich";
+        int expectedGamesSize = 5;
+        FindGamesBySimilarTitle findGamesBySimilarTitleUseCase = new FindGamesBySimilarTitle(gameService, apiService);
+        Mockito.when(apiService.signalScraper(gameTitleToFind)).thenReturn("ok");
+        //when
+        var result = findGamesBySimilarTitleUseCase.execute(gameTitleToFind);
+
+        //then 
+        Assertions.assertEquals(expectedGamesSize, result.size());
+    }
+
     private Game createGame(String title, String url, String imageUrl) {
         return Game.builder()
             .id(UUID.randomUUID().toString())
