@@ -66,7 +66,7 @@ public class UseCaseTests {
     public void should_return_no_games_when_passed_title_with_no_ocurrencies() {
         //given
         var gameTitleToFind = "nich";
-        int expectedGamesSize = 5;
+        int expectedGamesSize = 0;
         FindGamesBySimilarTitle findGamesBySimilarTitleUseCase = new FindGamesBySimilarTitle(gameService, apiService);
         Mockito.when(apiService.signalScraper(gameTitleToFind)).thenReturn("ok");
         //when
