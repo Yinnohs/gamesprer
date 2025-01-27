@@ -1,5 +1,3 @@
 {
-    "editor.fontSize": 14,
-    "java.configuration.updateBuildConfiguration": "interactive",
     "java.compile.nullAnalysis.mode": "automatic"
 }

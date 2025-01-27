@@ -6,6 +6,8 @@ import com.yinnohs.gamesprer.games.domain.ports.in.GameService;
 import com.yinnohs.gamesprer.games.infrastructure.mapper.GameMapper;
 import com.yinnohs.gamesprer.games.infrastructure.repository.GameDocumentRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.bson.types.Decimal128;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,7 +25,8 @@ public class GameInfoServiceImpl implements GameService {
     @Override
     public List<Game> findGameBySimilarTitle(String gameTitle) {
         var currentDate = getCurrentDate();
-        return repository.findInfoWithSimilarTitle(gameTitle , currentDate )
+        var minPrice = getMinPrice();
+        return repository.findInfoWithSimilarTitle(gameTitle , currentDate, minPrice)
                 .stream()
                 .map(mapper::toDomainModel)
                 .toList();
@@ -37,6 +40,10 @@ public class GameInfoServiceImpl implements GameService {
                 .stream()
                 .map(mapper::toDomainModel)
                 .toList();
+    }
+
+    private Decimal128 getMinPrice(){
+        return Decimal128.parse("0.5");
     }
 
     private Date getCurrentDate (){

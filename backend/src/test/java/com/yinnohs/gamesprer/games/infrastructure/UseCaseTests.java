@@ -1,7 +1,11 @@
 package com.yinnohs.gamesprer.games.infrastructure;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +54,7 @@ public class UseCaseTests {
     @Test
     public void should_return_all_games_when_passed_similar_title() {
         //given
-        var gameTitleToFind = "witcher";
+        var gameTitleToFind = "witch";
         int expectedGamesSize = 5;
         FindGamesBySimilarTitle findGamesBySimilarTitleUseCase = new FindGamesBySimilarTitle(gameService, apiService);
         Mockito.when(apiService.signalScraper(gameTitleToFind)).thenReturn("ok");
@@ -65,7 +69,7 @@ public class UseCaseTests {
         return Game.builder()
             .id(UUID.randomUUID().toString())
             .title(title)
-            .price(BigDecimal.TEN)
+            .price(BigDecimal.valueOf(200))
             .url(url)
             .imageUrl(url)
             .pageName("Instant Gaming")
@@ -80,7 +84,7 @@ public class UseCaseTests {
             createGame("The Witcher 4", TEST_URL, TEST_IMAGE_URL),
             createGame("The Witch", TEST_URL, TEST_IMAGE_URL),
             createGame("The Witcher 1 Olivus", TEST_URL, TEST_IMAGE_URL),
-            createGame("The Tintwitch Witcher 1", TEST_URL, TEST_IMAGE_URL)
+            createGame("The Tint witch cherioss 1", TEST_URL, TEST_IMAGE_URL)
         );
     }
 
