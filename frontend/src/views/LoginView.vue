@@ -4,7 +4,7 @@ import {onMounted} from 'vue'
 import { useUserStore } from '@/user/store/user.store';
 import {useLink} from 'vue-router'
 
-const {userBootstrap} = useUserStore()
+const { userBootstrap } = useUserStore()
 const link = useLink({
   to: '/find'
 })

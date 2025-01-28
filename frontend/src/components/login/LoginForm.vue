@@ -7,7 +7,7 @@ import { loginSchema } from '@/schema/LoginSchema'
 import { useLink } from 'vue-router'
 import { UseAdaptersStore } from '@/adapters/store/adapters.store'
 
-const { setUser, setToken } = useUserStore()
+const { setUser, setToken, toogleLoggedIn } = useUserStore()
 const { httpClient } = UseAdaptersStore()
 const navigation = useLink({ to: '/find' })
 type UserLoginKeys = keyof UserLogin
@@ -46,7 +46,7 @@ const handleSubmit = async () => {
     const response = await httpClient.post<UserLogin , LoginResponse>(url, null, loginForm)
     setToken(response.token)
     setUser(response.user)
-
+    toogleLoggedIn()
     navigation.navigate()
   } catch (error) {
     console.log(error)

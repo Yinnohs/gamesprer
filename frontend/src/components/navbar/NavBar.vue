@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { RouterLink, useLink } from 'vue-router'
 import { useUserStore } from '@/user/store/user.store'
+import { storeToRefs } from 'pinia';
 
-const { cleanUserInformation } = useUserStore()
+const userStore = useUserStore()
+const { isLoggedRef } = storeToRefs(userStore)
 const link = useLink({
   to: '/',
 })
 
 const logout = () => {
-  cleanUserInformation()
+  userStore.cleanUserInformation()
   link.navigate()
 }
 </script>
@@ -61,9 +63,10 @@ const logout = () => {
       </div>
     </div>
 
-    <div class="sticky inset-x-0 bottom-0 border-t border-zinc-700 bg-zinc-800 p-2">
-      <form action="#">
+    <div v-if="isLoggedRef" s class="sticky inset-x-0 bottom-0 border-t border-zinc-700 bg-zinc-800 p-2">
+      <div action="#">
         <button
+
           @click="logout"
           type="button"
           class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-zinc-500 hover:bg-zinc-700 hover:text-zinc-100"
@@ -89,7 +92,7 @@ const logout = () => {
             Logout
           </span>
         </button>
-      </form>
+      </div>
     </div>
   </div>
 </template>

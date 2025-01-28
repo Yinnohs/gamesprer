@@ -29,7 +29,7 @@ defineProps({
       />
       <div class="z-20 absolute bg-zinc-900/70 w-full h-full flex flex-col justify-center gap-6 items-center rounded-md hover:shadow-2xl shadow-zinc-900 duration-300 hover:opacity-0 ">
       <h2 class="text-2xl text text-center text-teal-500 bg-zinc-900/80 rounded-3xl p-3 shadow-md text-bold">{{ game.title }}</h2>
-      <p class="text-xl text-teal-500 bg-zinc-900/80 rounded-3xl p-3 shadow-md  text-bold">{{ game.price }} $</p>
+      <p class="text-xl text-teal-500 bg-zinc-900/80 rounded-3xl p-3 shadow-md  text-bold">{{ game.price }} €</p>
       </div>
     </div>
     <!-- text -->

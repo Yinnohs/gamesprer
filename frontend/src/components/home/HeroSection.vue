@@ -4,7 +4,7 @@ import AppLink from '../link/AppLink.vue'
 
 <template>
   <section
-    class="relative h-screen flex flex-col items-center justify-center text-center text-white"
+    class="relative h-screen w-screen flex flex-col items-center justify-center text-center text-white"
   >
     <div class="video-docker absolute top-0 left-0 w-full h-full overflow-hidden">
       <video

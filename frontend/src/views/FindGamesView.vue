@@ -42,6 +42,7 @@ const handleFindGames = async() => {
   if (!gameTitle.value)return
   isLoading.value = true
   const games =  await fetchGames(gameTitle.value)
+  gameTitle.value = ''
   isLoading.value = false
   if(!games){
     console.log('should thorw an error');

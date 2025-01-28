@@ -25,9 +25,7 @@ export class HttpClientAxiosAdapterImpl implements HttpClientAdapter{
 
   async post<Payload, Expected>( url: string, token: string | null = null, body: Payload ) :Promise<Expected>{
     let options = {}
-    debugger;
     if(token  !== null){
-      debugger;
       options = {
         headers: {
           Authorization: `Bearer ${token}`

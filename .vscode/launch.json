@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-GamesprerApplication<gamesprer>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.yinnohs.gamesprer.GamesprerApplication",
+            "projectName": "gamesprer",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

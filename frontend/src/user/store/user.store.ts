@@ -10,9 +10,10 @@ export const useUserStore = defineStore('user', () => {
   const resetStoreReferences = () => {
     userRef.value = {} as AppUser
     tokenRef.value = ''
+    isLoggedRef.value = false;
   }
-
-  const userRef = ref<AppUser>({} as AppUser)
+  const isLoggedRef = ref<boolean>(false)
+  const userRef = ref<AppUser>()
   const tokenRef = ref<string>('')
 
   const setToken = (token: string) => {
@@ -25,9 +26,14 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem(userLocalStorageKey, JSON.stringify(user))
   }
 
+  const toggleLoggedIn = ()=>{
+    isLoggedRef.value = !isLoggedRef.value
+  }
+
   const isUserActive = async () => {
     const request = await axios.get('/api/token/check')
     if (request.status !== 200) return false
+    isLoggedRef.value = true
     return true
   }
 
@@ -38,6 +44,7 @@ export const useUserStore = defineStore('user', () => {
     if (!userString || !token) return false
     userRef.value = JSON.parse(userString)
     tokenRef.value = token
+    isLoggedRef.value = true
     return true
   }
 
@@ -49,11 +56,14 @@ export const useUserStore = defineStore('user', () => {
   const cleanUserInformation = () => {
     cleanUserDataFromLocalStorage()
     resetStoreReferences()
+    isLoggedRef.value = false
   }
 
   return {
     userRef,
     tokenRef,
+    isLoggedRef,
+    toogleLoggedIn: toggleLoggedIn,
     setToken,
     setUser,
     isUserActive,
