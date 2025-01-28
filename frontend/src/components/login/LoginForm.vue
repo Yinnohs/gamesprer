@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useUserStore } from '@/user/store/user.store'
 import type { LoginResponse, UserLogin } from '@/classes/Auth'
 import { z } from 'zod'
@@ -11,6 +11,8 @@ const { setUser, setToken, toogleLoggedIn } = useUserStore()
 const { httpClient } = UseAdaptersStore()
 const navigation = useLink({ to: '/find' })
 type UserLoginKeys = keyof UserLogin
+
+const inputType = ref('password')
 
 const loginForm = reactive<UserLogin>({
   email: '',
@@ -36,6 +38,11 @@ const checkFormPayload = (formData: UserLogin): boolean => {
 
     return false
   }
+}
+
+
+const toggleInputType = ()=>{
+  inputType.value = inputType.value === 'password' ? 'text' : 'password'
 }
 
 const handleSubmit = async () => {
@@ -76,14 +83,14 @@ const handleSubmit = async () => {
             <input
               v-model="loginForm.email"
               type="email"
-              class="w-full rounded-lg bg-zinc-600 border-zinc-500 p-4 pe-12 text-sm shadow-sm"
+              class="w-full rounded-lg bg-zinc-600 border-zinc-500 p-4 pe-12 text-sm shadow-sm shadow-zinc-900"
               placeholder="Enter email"
             />
 
             <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="size-4 text-gray-400"
+                class="size-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -97,6 +104,7 @@ const handleSubmit = async () => {
               </svg>
             </span>
           </div>
+          <span v-if="formErrors.email.length > 0" class="text-md text-red-400"> {{ formErrors.email }} </span>
         </div>
 
         <div>
@@ -105,15 +113,18 @@ const handleSubmit = async () => {
           <div class="relative">
             <input
               v-model="loginForm.password"
-              type="password"
-              class="w-full rounded-lg bg-zinc-600 border-gray-400 p-4 pe-12 text-sm shadow-sm"
+              :type="inputType"
+              class="w-full rounded-lg bg-zinc-600 border-gray-400 p-4 pe-12 text-sm shadow-sm shadow-zinc-900"
               placeholder="Enter password"
             />
 
-            <span class="absolute inset-y-0 end-0 grid place-content-center px-4">
+            <button
+              @click="toggleInputType"
+              type="button"
+              class="absolute inset-y-0 end-0 grid place-content-center px-4 rounded-md text-zinc-400 hover:text-teal-700 duration-150 ease-linear">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="size-4 text-gray-400"
+                class="size-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -131,13 +142,14 @@ const handleSubmit = async () => {
                   d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                 />
               </svg>
-            </span>
+            </button>
           </div>
+          <span v-if="formErrors.password.length > 0" class="text-md text-red-400"> {{ formErrors.password }} </span>
         </div>
 
         <button
           type="submit"
-          class="block w-full rounded-lg bg-teal-600 px-5 py-3 text-sm font-medium text-white"
+          class="block w-full rounded-lg bg-teal-600 px-5 py-3 text-sm font-medium text-white hover:shadow-md hover:shadow-zinc-900 hover:bg-teal-700 duration-100 ease-linear"
         >
           Sign in
         </button>

@@ -29,7 +29,7 @@ const logout = () => {
       </div>
 
       <div>
-        <div class="px-2">
+        <div class="p-1">
           <ul class="space-y-1 border-t border-zinc-700 pt-4">
             <li>
               <RouterLink
@@ -61,7 +61,38 @@ const logout = () => {
           </ul>
         </div>
       </div>
-    </div>
+
+      <div v-if="isLoggedRef" class="p-1">
+          <ul class="space-y-1 border-t border-zinc-700 pt-4">
+            <li>
+              <RouterLink
+                to="/find"
+                class="group relative flex justify-center rounded px-2 py-1.5 text-zinc-100 hover:bg-zinc-700"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                  />
+                </svg>
+                <span
+                  class="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-zinc-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible"
+                >
+                  Games
+                </span>
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
+      </div>
 
     <div v-if="isLoggedRef" s class="sticky inset-x-0 bottom-0 border-t border-zinc-700 bg-zinc-800 p-2">
       <div action="#">
