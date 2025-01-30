@@ -1,5 +1,5 @@
 import { v7 } from "uuid"
-import { persistGameData } from "./db.js"
+import { persistGameData } from "./games/dao/db.js"
 import type { GamesData } from "./types.ts"
 
 const dataTotest: GamesData[] = [{

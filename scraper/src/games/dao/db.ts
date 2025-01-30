@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb"
-import { type GamesData } from "./types.js"
+import { type GamesData } from "../../types"
 
 
 

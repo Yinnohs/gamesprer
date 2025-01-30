@@ -10,5 +10,8 @@
     "skipLibCheck": true
   },
   "include": ["src/**/*.ts"], // Include TypeScript files in the src folder
-  "exclude": ["node_modules", "dist"] // Exclude node_modules and build output
+  "exclude": ["node_modules", "dist"], // Exclude node_modules and build output
+  "paths": {
+      "@/*": ["./src/*"]
+    }
 }

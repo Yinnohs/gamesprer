@@ -7,3 +7,5 @@ export type GamesData = {
     scrapedAt: Date
     imageUrl: string
 }
+
+export type OmitedIdGameData = Omit<GamesData, 'id'>
