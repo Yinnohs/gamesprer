@@ -21,30 +21,31 @@ export class ScraperService{
     private async getDataFromHumbleBundle(url: string): Promise<OmitedIdGameData[]>{
         const page = await this.generatePageObject()
         await page.goto(url)
-        await page.waitForTimeout(800)
+        await page.waitForTimeout(1000)
     
         const data = await page.$$eval("div.js-entity", (gamesCards)=>{
             
             function formatPrice (price :string | undefined): number {
-                console.log(price);
                 if (price === undefined || price.trim() === '') return 0.0
                 return parseFloat(price.substring(1))
             }
-    
-            const formattedData : Omit<GamesData, 'id'>[] = gamesCards.map((mainCard)=>{
+
+            const formattedData:Omit<GamesData, 'id'>[] = [] 
+            gamesCards.forEach((mainCard)=>{
                 const gameUrl = mainCard.querySelector("a")?.href || ''
                 const gameTitle = mainCard.querySelector("span.entity-title")?.getHTML() || ''
-                const gamePrice = mainCard.querySelector("span.price")?.getHTML() || ''
-                const imageUrl = mainCard.querySelector("img")?.src || ''
-    
-                return{
+                const gamePrice = mainCard.querySelector("span.price")?.getHTML() || '0'
+                const imageUrl = mainCard.querySelector("img")?.src || ''    
+                
+                if(gameUrl === '' || imageUrl === '' || gamePrice === '0') return
+                formattedData.push({
                     url: gameUrl,
                     title: gameTitle.trim().toLocaleLowerCase(),
                     price: formatPrice(gamePrice),
                     pageName: 'Humble Bundle',
                     scrapedAt : new Date(),
                     imageUrl
-                }
+                })
             })
     
             return formattedData
@@ -57,7 +58,7 @@ export class ScraperService{
         const page = await this.generatePageObject();
         
         await page.goto(url)
-        await page.waitForTimeout(800)
+        await page.waitForTimeout(1000)
     
         const data =  await page.$$eval("div.item", (gamesCards)=>{
              
@@ -65,21 +66,22 @@ export class ScraperService{
                 if (price === undefined || price.trim() === '') return 0.0
                 return parseFloat(price.slice(0,-1))
             }
-    
-            const formattedData : Omit<GamesData, 'id'>[] = gamesCards.map((mainCard)=>{
+            const formattedData:Omit<GamesData, 'id'>[] = [] 
+            gamesCards.forEach((mainCard)=>{
                 const gameUrl = mainCard.querySelector("a")?.href || ''
                 const gameTitle = mainCard.querySelector("span.title")?.getHTML() || ''
-                const gamePrice = mainCard.querySelector("div.price")?.getHTML() || ''
+                const gamePrice = mainCard.querySelector("div.price")?.getHTML() || '0'
                 const imageUrl = mainCard.querySelector("img")?.src || ''
-    
-                return{
+                if(gameUrl === '' || imageUrl === '' || gamePrice === '0') return
+
+                formattedData.push({
                     url: gameUrl,
                     title: gameTitle.trim().toLocaleLowerCase(),
                     price: formatPrice(gamePrice),
                     pageName: 'Instant Gaming',
                     scrapedAt: new Date(),
                     imageUrl: imageUrl
-                }
+                })
             })
     
             return formattedData
@@ -92,16 +94,14 @@ export class ScraperService{
         
         await page.goto(url)
         await page.waitForTimeout(1000)
+
         
-        const data =  await page.$$eval("div.item", (gamesCards)=>{
-             
+        const data =  await page.$$eval("div.item", (gamesCards)=>{     
             function formatPrice (price :string | undefined): number {
                 if (price === undefined || price.trim() === '') return 0.0
                 return parseFloat(price.slice(1, price.length))
             }
-            
             const formattedData:Omit<GamesData, 'id'>[] = [] 
-
              gamesCards.forEach((mainCard)=>{
                 const gameUrl = mainCard.querySelector("a")?.href|| ''
                 const gameTitle = mainCard.querySelector("a.alg_click")?.getHTML() || ''
@@ -158,7 +158,6 @@ export class ScraperService{
             throw new Error('Error getting games data')
         }
 
-        console.log({finalGamesArray});
         console.log('[INFO]: Adding Games data to the database');
         persistGameData(finalGamesArray)
         console.log('[INFO]: Done with game data'); 
