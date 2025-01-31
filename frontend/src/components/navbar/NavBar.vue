@@ -16,6 +16,7 @@ const logout = () => {
 </script>
 <template>
   <div
+  v-if="isLoggedRef"
     class="z-50 sticky flex h-screen w-16 flex-col justify-between border-e border-zinc-700 bg-zinc-800"
   >
     <div>
@@ -62,7 +63,7 @@ const logout = () => {
         </div>
       </div>
 
-      <div v-if="isLoggedRef" class="p-1">
+      <div class="p-1">
           <ul class="space-y-1 border-t border-zinc-700 pt-4">
             <li>
               <RouterLink
@@ -94,7 +95,7 @@ const logout = () => {
         </div>
       </div>
 
-    <div v-if="isLoggedRef" s class="sticky inset-x-0 bottom-0 border-t border-zinc-700 bg-zinc-800 p-2">
+    <div s class="sticky inset-x-0 bottom-0 border-t border-zinc-700 bg-zinc-800 p-2">
       <div action="#">
         <button
 
