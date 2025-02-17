@@ -222,6 +222,4 @@ export class ScraperService{
         persistGameData(finalGamesArray)
         console.log('[INFO]: Done with game data'); 
     }
-
-    
 }

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Game } from '@/classes/Game';
+import CardInformation from '@/components/card/CardInformation.vue';
+import CardImage from '@/components/card/CardImage.vue';
 
 defineProps({
   game: {
@@ -18,25 +20,8 @@ defineProps({
 </script>
 
 <template>
-  <a :href="game.url" target="_blank" class="relative flex w-full h-96 flex-col justify-around rounded-md hover:cursor-pointer">
-    <!-- card -->
-    <div  class="relative flex items-center  flex-1 rounded-md">
-
-      <img
-        :alt="game.title"
-        :src="game.imageUrl"
-        class="absolute inset-0 h-full w-full object-fit rounded-md blur-0"
-      />
-      <div class="z-20 absolute bg-zinc-900/70 w-full h-full flex flex-col justify-center gap-6 items-center rounded-md hover:shadow-2xl shadow-zinc-900 duration-300 hover:opacity-0 ">
-      <h2 class="text-2xl text text-center text-teal-500 bg-zinc-900/80 rounded-3xl p-3 shadow-md text-bold">{{ game.title }}</h2>
-      <p class="text-xl text-teal-500 bg-zinc-900/80 rounded-3xl p-3 shadow-md  text-bold">{{ game.price }} €</p>
-      </div>
-    </div>
-    <!-- text -->
-    <div class="absolute z-20  bottom-1 flex flex-row justify-center bg-zinc-900/70 rounded-3xl p-1   ">
-      <p class="text-teal-500 text-center text-md">{{ game.pageName }}</p>
-    </div
-    >
+  <a :href="game.url" target="_blank" class="flex w-full h-96 flex-col justify-evenly items-center pb-2 rounded-md hover:cursor-pointer hover:shadow-lg hover:bg-zinc-900/40 transition-all duration-100">
+      <CardImage :title="game.title" :imageUrl="game.imageUrl"/>
+      <CardInformation :price="game.price" :page-name="game.pageName" :title="game.title"/>
   </a>
 </template>
-
