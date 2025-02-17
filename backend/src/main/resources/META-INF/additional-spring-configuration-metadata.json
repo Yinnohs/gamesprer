@@ -33,5 +33,25 @@
     "name": "api.url",
     "type": "java.lang.String",
     "description": "A description for 'api.url'"
+  },
+  {
+    "name": "web.socket.prefix",
+    "type": "java.lang.String",
+    "description": "A description for 'web.socket.prefix'"
+  },
+  {
+    "name": "web.socket.endpoint",
+    "type": "java.lang.String",
+    "description": "A description for 'web.socket.endpoint'"
+  },
+  {
+    "name": "web.socket.allowed-origins",
+    "type": "java.lang.String",
+    "description": "A description for 'web.socket.allowed-origins'"
+  },
+  {
+    "name": "web.socket.topic",
+    "type": "java.lang.String",
+    "description": "A description for 'web.socket.topic'"
   }
 ]}

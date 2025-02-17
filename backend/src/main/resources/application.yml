@@ -6,7 +6,6 @@ spring:
       uri: mongodb://yinnohs:1234@127.0.0.1:27017/gamesprer?authSource=admin
       auto-index-creation: true
     
-
 server:
   port: 5052
 
@@ -38,3 +37,10 @@ argon2:
 
 api:
   url: http://localhost:3000
+
+web:
+  socket:
+    topic: /topic
+    endpoint: /ws
+    allowed-origins: "*:3000, *:5052, *:8080"
+    prefix: /app
