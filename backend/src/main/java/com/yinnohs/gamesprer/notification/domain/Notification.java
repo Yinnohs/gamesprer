@@ -17,4 +17,5 @@ public class Notification {
     private String message;
     private String type;
     private String UserId;
+    private String gameToFindTitle;
 }

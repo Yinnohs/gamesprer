@@ -1,11 +1,17 @@
 spring:
+  sql:
+    init:
+      continue-on-error: true
   application:
     name: gamesprer
   data:
     mongodb:
       uri: mongodb://yinnohs:1234@127.0.0.1:27017/gamesprer?authSource=admin
       auto-index-creation: true
-    
+
+springdoc:
+  swagger-ui:
+    path: /v1/api/swagger-ui.html
 server:
   port: 5052
 
@@ -42,5 +48,4 @@ web:
   socket:
     topic: /topic
     endpoint: /ws
-    allowed-origins: "*:3000, *:5052, *:8080"
     prefix: /app
