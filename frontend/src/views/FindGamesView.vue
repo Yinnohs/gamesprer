@@ -62,9 +62,9 @@ onMounted(() => {
 
 <template>
   <section class="flex flex-col w-full h-screen justify-around items-center">
-    <form @submit.prevent="handleFindGames" class="flex w-[50%] px-12 py-6 flex-col justify-center items-center pb-4 shadow-zinc-900 gap-2">
-      <h1 class="text-4xl text-teal-500">Busca un juego</h1>
-      <div class="flex flex-row gap-4 w-full items-center justify-center">
+    <form @submit.prevent="handleFindGames" class="flex w-full px-12 py-6 flex-col justify-center items-center pb-4 shadow-zinc-900 gap-2 md:w-[50%]">
+      <h1 class="text-2xl text-teal-500 md:text-4xl">Busca un juego</h1>
+      <div class="flex flex-col gap-4 w-full items-center justify-center md:flex-row">
         <FindInput :value="gameTitle" @update:modelValue="gameTitle = $event" :isLoading="isLoading" />
         <AppButton> Buscar</AppButton>
       </div>
