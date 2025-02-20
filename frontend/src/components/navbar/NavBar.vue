@@ -17,7 +17,7 @@ const logout = () => {
 <template>
   <div
   v-if="isLoggedRef"
-    class="z-50 sticky flex h-screen w-0 flex-col justify-between border-e border-zinc-700 bg-zinc-800"
+    class="z-50 sticky flex h-screen w-16 flex-col justify-between border-e border-zinc-700 bg-zinc-800"
   >
     <div>
       <div class="inline-flex size-16 items-center justify-center">
