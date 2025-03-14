@@ -1,4 +1,5 @@
 import { AppUser } from '@/classes/User'
+import { useNotificationStore } from '@/notification/notification.store'
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -7,6 +8,7 @@ const userLocalStorageKey = 'user'
 const tokenLocalStorageKey = 'token'
 
 export const useUserStore = defineStore('user', () => {
+  const {connect, disconnect} = useNotificationStore()
   const resetStoreReferences = () => {
     userRef.value = {} as AppUser
     tokenRef.value = ''
@@ -27,6 +29,9 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const toggleLoggedIn = ()=>{
+    if(userRef.value && userRef.value?.id !== undefined){
+      connect(userRef.value?.id)
+    }
     isLoggedRef.value = !isLoggedRef.value
   }
 
@@ -57,6 +62,7 @@ export const useUserStore = defineStore('user', () => {
     cleanUserDataFromLocalStorage()
     resetStoreReferences()
     isLoggedRef.value = false
+    disconnect()
   }
 
   return {

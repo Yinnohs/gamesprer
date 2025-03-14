@@ -7,13 +7,18 @@ import { useUserStore } from '@/user/store/user.store';
 import AppButton from '@/components/buttons/AppButton.vue';
 import { useLink } from 'vue-router';
 import { UseAdaptersStore } from '@/adapters/store/adapters.store';
+import { useGamesStore } from '@/games/store/game.store';
+import { storeToRefs } from 'pinia';
 
 const { tokenRef, userBootstrap } = useUserStore()
 const { httpClient } = UseAdaptersStore()
+const { gamesRef } = storeToRefs(useGamesStore())
+const gameStore = useGamesStore()
+
 const link = useLink({
   to: '/login'
 })
-const gamesData = ref<Game[]>([])
+
 const gameTitle = ref('')
 const isLoading = ref(false)
 
@@ -42,13 +47,14 @@ const handleFindGames = async() => {
   if (!gameTitle.value)return
   isLoading.value = true
   const games =  await fetchGames(gameTitle.value)
+  gameStore.cleanGames()
   gameTitle.value = ''
   isLoading.value = false
   if(!games){
     console.log('should thorw an error');
     return
   }
-  gamesData.value = games
+  gameStore.setGames(games)
 }
 
 
@@ -74,7 +80,7 @@ onMounted(() => {
     </div>
 
     <div class="overflow-y-scroll grid grid-cols-1 gap-7 py-6 w-full h-[90%] justify-items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      <GameCard v-for="game in gamesData" v-bind:key="game.id" :game="game as Game"/>
+      <GameCard v-for="game in  gamesRef" v-bind:key="game.id" :game="game as Game"/>
     </div>
   </section>
 </template>
