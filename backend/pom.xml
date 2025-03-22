@@ -8,14 +8,19 @@
 		<version>3.3.9</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.yinnohs.</groupId>
+	<groupId>com.yinnohs</groupId>
 	<artifactId>gamesprer</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>gamesprer</name>
-	<description>Game data scraper backend for better price adjustment</description>
+	<description>Game price tracking and notification system</description>
+	<packaging>jar</packaging>
 	<url/>
 	<licenses>
-		<license/>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+			<distribution>repo</distribution>
+		</license>
 	</licenses>
 	<developers>
 		<developer/>
