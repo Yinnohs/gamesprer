@@ -6,12 +6,10 @@ import type { Game } from '@/classes/Game';
 import { useUserStore } from '@/user/store/user.store';
 import AppButton from '@/components/buttons/AppButton.vue';
 import { useLink } from 'vue-router';
-import { UseAdaptersStore } from '@/adapters/store/adapters.store';
 import { useGamesStore } from '@/games/store/game.store';
 import { storeToRefs } from 'pinia';
 
 const { tokenRef, userBootstrap } = useUserStore()
-const { httpClient } = UseAdaptersStore()
 const { gamesRef } = storeToRefs(useGamesStore())
 const gameStore = useGamesStore()
 
@@ -31,30 +29,14 @@ const checkStoragedUser = (): boolean => {
     return true
 }
 
-const fetchGames = async (gameTitle :string) => {
-  try {
-    if (!gameTitle) return
-
-    const url = `/api/gameinfo/${gameTitle}`
-    const response = await httpClient.get<Game[]>(url, tokenRef)
-    return response
-  } catch (error) {
-    console.error(error)
-  }
-}
 
 const handleFindGames = async() => {
   if (!gameTitle.value)return
   isLoading.value = true
-  const games =  await fetchGames(gameTitle.value)
   gameStore.cleanGames()
+  await gameStore.fetchGames(gameTitle.value, tokenRef)
   gameTitle.value = ''
   isLoading.value = false
-  if(!games){
-    console.log('should thorw an error');
-    return
-  }
-  gameStore.setGames(games)
 }
 
 
@@ -76,7 +58,7 @@ onMounted(() => {
       </div>
     </form>
     <div v-if="isLoading">
-      <h1>Buscando Juegos...</h1>
+      <h1>Buscando juegos espere un momento... (si no llegan a aparecer en unos segundos, esperar al mensaje)</h1>
     </div>
 
     <div class="overflow-y-scroll grid grid-cols-1 gap-7 py-6 w-full h-[90%] justify-items-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
