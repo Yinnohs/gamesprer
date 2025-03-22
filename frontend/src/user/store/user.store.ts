@@ -8,7 +8,7 @@ const userLocalStorageKey = 'user'
 const tokenLocalStorageKey = 'token'
 
 export const useUserStore = defineStore('user', () => {
-  const {connect, disconnect} = useNotificationStore()
+  const { connect, disconnect } = useNotificationStore()
   const resetStoreReferences = () => {
     userRef.value = {} as AppUser
     tokenRef.value = ''
@@ -28,11 +28,16 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem(userLocalStorageKey, JSON.stringify(user))
   }
 
-  const toggleLoggedIn = ()=>{
-    if(userRef.value && userRef.value?.id !== undefined){
-      connect(userRef.value?.id)
+  const toggleLoggedIn = async () => {
+    try {
+      if (userRef.value && userRef.value?.id !== undefined) {
+        await connect(userRef.value.id)
+        isLoggedRef.value = true
+      }
+    } catch (error) {
+      console.error('Failed to connect to WebSocket:', error)
+      isLoggedRef.value = false
     }
-    isLoggedRef.value = !isLoggedRef.value
   }
 
   const isUserActive = async () => {
