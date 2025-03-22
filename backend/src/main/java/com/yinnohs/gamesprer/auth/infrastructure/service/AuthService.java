@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.stream.Collectors;
+
 
 @Service
 @Slf4j
@@ -29,27 +28,19 @@ public class AuthService {
 
      
 
-    public String generateToken(Authentication authentication){
-        String scope = getScopeFromAuthentication(authentication);
-        var claims = getClaims("gamesprer", authentication.getName(), scope);
+    public String generateToken(Authentication authentication, String userId){
+        var claims = getClaims("gamesprer", authentication.getName(), userId);
         return  jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
-    private String getScopeFromAuthentication(Authentication authentication){
-        return  authentication.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
-    }
-
-    private JwtClaimsSet getClaims(String issuer, String name, String scope){
+    private JwtClaimsSet getClaims(String issuer, String name, String userId){
         var now = Instant.now();
         return JwtClaimsSet.builder()
                 .issuer(issuer)
                 .issuedAt(now)
                 .subject(name)
                 .expiresAt(now.plus(1, ChronoUnit.DAYS))
-                .claim("scope", scope )
+                .claim("userId", userId )
                 .build();
 
     }

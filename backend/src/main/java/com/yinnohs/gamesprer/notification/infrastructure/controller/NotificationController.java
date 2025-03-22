@@ -22,7 +22,7 @@ public class NotificationController {
             .title(message.title())
             .message(message.message())
             .type(message.type())
-            .UserId(message.userId())
+            .userId(message.userId())
             .gameToFindTitle(message.gameToFindTitle())
             .build();
 

@@ -55,10 +55,9 @@ public class AuthController {
         //UserDocument userDetails = (UserDocument) authentication.getPrincipal();
 
         log.info("Token requested for user {}", authentication.getAuthorities());
-
-        //token creating and getting user (response creation)
-        String token = authService.generateToken(authentication);
         User user = findLoggedUserByEmailUseCase.apply(request.email());
+        //token creating and getting user (response creation)
+        String token = authService.generateToken(authentication, user.getId());
         LoginResponse response = new LoginResponse(token, userMapper.userToResponseDto(user));
 
         return ResponseEntity.ok(response);

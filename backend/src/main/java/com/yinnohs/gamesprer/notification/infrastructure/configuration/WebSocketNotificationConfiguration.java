@@ -16,14 +16,20 @@ public class WebSocketNotificationConfiguration implements WebSocketMessageBroke
 
     @Override
     public void configureMessageBroker(@NonNull final MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
+        config.enableSimpleBroker("/topic", "/queue", "/user");
         config.setApplicationDestinationPrefixes("/app");
+        config.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints( @NonNull final StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-        .setAllowedOrigins("localhost:8080")
+        .setAllowedOrigins(
+            "http://localhost:5052",
+            "http://localhost:5053",
+            "http://192.168.1.49:5052",
+            "http://192.168.1.49:5053"
+        )
         .setHandshakeHandler(new DetermineUserWebSocketHandler())
         .withSockJS();
     }
