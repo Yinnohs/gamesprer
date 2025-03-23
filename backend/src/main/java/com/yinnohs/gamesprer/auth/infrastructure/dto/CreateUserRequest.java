@@ -6,6 +6,7 @@ public record CreateUserRequest(
          String email,
          String address,
          String phoneNumber,
-         String password
+         String password,
+         boolean mfaEnabled
 ) {
 }

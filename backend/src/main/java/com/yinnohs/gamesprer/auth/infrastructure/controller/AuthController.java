@@ -6,6 +6,9 @@ import com.yinnohs.gamesprer.auth.infrastructure.dto.CreateUserRequest;
 import com.yinnohs.gamesprer.auth.infrastructure.dto.LoginResponse;
 import com.yinnohs.gamesprer.auth.infrastructure.dto.LoginResquest;
 import com.yinnohs.gamesprer.auth.infrastructure.service.AuthService;
+import com.yinnohs.gamesprer.tfa.application.GenerateMFAQrCode;
+import com.yinnohs.gamesprer.tfa.application.GenerateMFASecretUseCase;
+import com.yinnohs.gamesprer.user.application.UpdateRefreshTokenUseCase;
 import com.yinnohs.gamesprer.user.domain.model.User;
 import com.yinnohs.gamesprer.user.infrastructure.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -30,14 +33,20 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final SignUpUserUseCase signUpUserUseCase;
     private final FindLoggedUserByEmailUseCase findLoggedUserByEmailUseCase;
+    private final UpdateRefreshTokenUseCase updateRefreshTokenUseCase;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final GenerateMFASecretUseCase generateMFASecretUseCase;
+    private final GenerateMFAQrCode generateMFAQrCode;
 
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequest request){
         String hashedPassword = passwordEncoder.encode(request.password());
         User userToCreate = userMapper.createRequestToUser(request);
         userToCreate.setPassword(hashedPassword);
+        if(userToCreate.isMfaEnabled()){
+            userToCreate.setMfaSecret(generateMFASecretUseCase.execute());
+        }
         User user = signUpUserUseCase.apply(userToCreate);
 
         return ResponseEntity.ok(userMapper.userToResponseDto(user));
@@ -52,17 +61,15 @@ public class AuthController {
                 ));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        //UserDocument userDetails = (UserDocument) authentication.getPrincipal();
 
         log.info("Token requested for user {}", authentication.getAuthorities());
         User user = findLoggedUserByEmailUseCase.apply(request.email());
-        //token creating and getting user (response creation)
+       
         String token = authService.generateToken(authentication, user.getId());
         String refreshToken = authService.generateRefreshToken(authentication, user.getId());
-        LoginResponse response = new LoginResponse(token, userMapper.userToResponseDto(user));
-
+        String secretImageUri = generateMFAQrCode.execute(user.getMfaSecret());
+        LoginResponse response = new LoginResponse(token, userMapper.userToResponseDto(user, secretImageUri));
+        updateRefreshTokenUseCase.apply(user.getId(), refreshToken);
         return ResponseEntity.ok(response);
     }
-
-
 }

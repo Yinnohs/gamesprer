@@ -19,6 +19,8 @@ public class User {
     private String phoneNumber;
     private String password;
     private String refreshToken;
+    private boolean mfaEnabled;
+    private String mfaSecret;
 
     private LocalDateTime createdAt;
     private LocalDateTime lastLoginAt;

@@ -38,4 +38,9 @@ public class UserDomainBeansConfiguration {
         return new UserChangePhoneNumberUseCase(userService);
     }
 
+    @Bean
+    public UpdateRefreshTokenUseCase updateRefreshTokenUseCase(UserService userService){
+        return new UpdateRefreshTokenUseCase(userService);
+    }
+
 }

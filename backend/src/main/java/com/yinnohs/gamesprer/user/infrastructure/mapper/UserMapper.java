@@ -15,6 +15,7 @@ public class UserMapper {
                 .address(createUserDto.address())
                 .email(createUserDto.email())
                 .phoneNumber(createUserDto.phoneNumber())
+                .mfaEnabled(createUserDto.mfaEnabled())
                 .build();
     }
 
@@ -26,7 +27,23 @@ public class UserMapper {
                 user.getEmail(),
                 user.getAddress(),
                 user.getPhoneNumber(),
-                user.getRefreshToken()
+                user.getRefreshToken(),
+                user.isMfaEnabled(),
+                ""
+        );
+    }
+
+    public UserResponseDto userToResponseDto(User user, String secretImageUri){
+        return new UserResponseDto(
+                user.getId(),
+                user.getName(),
+                user.getSurname(),
+                user.getEmail(),
+                user.getAddress(),
+                user.getPhoneNumber(),
+                user.getRefreshToken(),
+                user.isMfaEnabled(),
+                secretImageUri
         );
     }
 }

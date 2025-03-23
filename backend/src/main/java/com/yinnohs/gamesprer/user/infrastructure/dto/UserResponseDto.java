@@ -1,5 +1,8 @@
 package com.yinnohs.gamesprer.user.infrastructure.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record UserResponseDto(
         String id,
         String name,
@@ -7,6 +10,8 @@ public record UserResponseDto(
         String email,
         String address,
         String phoneNumber,
-        String refreshToken
+        String refreshToken,
+        boolean mfaEnabled,
+        String secretImageUri
 ) {
 }

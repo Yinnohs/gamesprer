@@ -43,6 +43,8 @@ public class UserDocument implements UserDetails {
     private String password;
     @Nullable
     private String refreshToken;
+    private boolean mfaEnabled;
+    private String mfaSecret;
 
     private LocalDateTime createdAt;
     private LocalDateTime lastLoginAt;
@@ -61,6 +63,8 @@ public class UserDocument implements UserDetails {
                 .lastLoginAt(user.getLastLoginAt())
                 .password(user.getPassword())
                 .refreshToken(user.getRefreshToken())
+                .mfaEnabled(user.isMfaEnabled())
+                .mfaSecret(user.getMfaSecret())
                 .build();
     }
 
@@ -77,6 +81,8 @@ public class UserDocument implements UserDetails {
                 .lastLoginAt(user.getLastLoginAt())
                 .password(user.getPassword())
                 .refreshToken(user.getRefreshToken())
+                .mfaEnabled(user.isMfaEnabled())
+                .mfaSecret(user.getMfaSecret())
                 .build();
     }
 
