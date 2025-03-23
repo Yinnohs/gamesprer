@@ -1,17 +1,75 @@
 {
   "compilerOptions": {
-    "target": "ESNext", // Use ESNext for modern syntax
-    "module": "ESNext", // Use ES Modules
-    "moduleResolution": "Node", // Node.js-style module resolution
-    "outDir": "./dist", // Output directory for compiled JS files
-    "esModuleInterop": true, // Allow default imports from CommonJS modules
+    // Specifies the ECMAScript target version for the compiled JavaScript
+    // ESNext means it will use the latest supported features
+    "target": "ESNext",
+
+    // Specifies the module system for the compiled code
+    // ESNext enables native ES modules (import/export)
+    "module": "ESNext",
+
+    // Determines how TypeScript looks up files from module specifiers
+    // Node uses Node.js's module resolution algorithm
+    "moduleResolution": "Node",
+
+    // Specifies the output directory for compiled JavaScript files
+    "outDir": "./dist",
+
+    // Enables interoperability between CommonJS and ES Modules
+    // Allows you to use default imports from CommonJS modules
+    "esModuleInterop": true,
+
+    // Ensures consistent casing in file names across different operating systems
     "forceConsistentCasingInFileNames": true,
-    "strict": true, // Enable strict type-checking
-    "skipLibCheck": true
+
+    // Enables all strict type-checking options
+    // This includes strict null checks, strict function types, etc.
+    "strict": true,
+
+    // Skips type checking of declaration files (*.d.ts)
+    // This can improve performance but might miss some type errors
+    "skipLibCheck": true,
+
+    // Allows JavaScript files to be compiled
+    // Useful when working with mixed TypeScript/JavaScript projects
+    "allowJs": true,
+
+    // Allows importing JSON files as modules
+    // Useful for configuration files and data
+    "resolveJsonModule": true,
+
+    // Ensures each file can be safely transpiled without relying on other files
+    // Important for build tools and bundlers
+    "isolatedModules": true,
+
+    // Controls whether TypeScript should emit output files
+    // false means it will generate output files
+    "noEmit": false,
+
+    // Generates corresponding .d.ts declaration files
+    // Useful for library development and type definitions
+    "declaration": true
   },
-  "include": ["src/**/*.ts"], // Include TypeScript files in the src folder
-  "exclude": ["node_modules", "dist"], // Exclude node_modules and build output
+
+  // Specifies which files should be included in the compilation
+  // This pattern includes all TypeScript files in the src directory
+  "include": ["src/**/*.ts"],
+
+  // Specifies which files should be excluded from compilation
+  // node_modules and dist are typically excluded
+  "exclude": ["node_modules", "dist"],
+
+  // Configures path aliases for imports
+  // Allows you to use @/ to reference files from the src directory
   "paths": {
-      "@/*": ["./src/*"]
-    }
+    "@/*": ["./src/*"]
+  },
+
+  // Configuration specific to ts-node
+  "ts-node": {
+    // Enables ES modules support in ts-node
+    "esm": true,
+    // Allows importing files without specifying the file extension
+    "experimentalSpecifierResolution": "node"
+  }
 }
