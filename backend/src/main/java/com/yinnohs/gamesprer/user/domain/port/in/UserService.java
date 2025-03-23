@@ -12,4 +12,5 @@ public interface UserService {
     public User updateUserEmail(String userid, String newEmail);
     public User updateUserAddress(String userid, String address);
     public User updateUserPhoneNumber(String userid, String phoneNumber);
+    public void updateRefreshToken(User user);
 }

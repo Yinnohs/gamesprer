@@ -18,6 +18,7 @@ public class User {
     private String address;
     private String phoneNumber;
     private String password;
+    private String refreshToken;
 
     private LocalDateTime createdAt;
     private LocalDateTime lastLoginAt;

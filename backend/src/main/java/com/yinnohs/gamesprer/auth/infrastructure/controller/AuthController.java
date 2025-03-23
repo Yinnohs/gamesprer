@@ -58,6 +58,7 @@ public class AuthController {
         User user = findLoggedUserByEmailUseCase.apply(request.email());
         //token creating and getting user (response creation)
         String token = authService.generateToken(authentication, user.getId());
+        String refreshToken = authService.generateRefreshToken(authentication, user.getId());
         LoginResponse response = new LoginResponse(token, userMapper.userToResponseDto(user));
 
         return ResponseEntity.ok(response);

@@ -6,6 +6,7 @@ public record UserResponseDto(
         String surname,
         String email,
         String address,
-        String phoneNumber
+        String phoneNumber,
+        String refreshToken
 ) {
 }

@@ -25,7 +25,8 @@ public class UserMapper {
                 user.getSurname(),
                 user.getEmail(),
                 user.getAddress(),
-                user.getPhoneNumber()
+                user.getPhoneNumber(),
+                user.getRefreshToken()
         );
     }
 }

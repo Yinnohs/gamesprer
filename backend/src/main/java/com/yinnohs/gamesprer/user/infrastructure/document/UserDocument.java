@@ -1,7 +1,6 @@
 package com.yinnohs.gamesprer.user.infrastructure.document;
 
-
-
+import com.mongodb.lang.Nullable;
 import com.yinnohs.gamesprer.user.domain.model.User;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -42,6 +41,8 @@ public class UserDocument implements UserDetails {
     private String phoneNumber;
     @NotNull
     private String password;
+    @Nullable
+    private String refreshToken;
 
     private LocalDateTime createdAt;
     private LocalDateTime lastLoginAt;
@@ -59,6 +60,7 @@ public class UserDocument implements UserDetails {
                 .lastUpdate(user.getLastUpdate())
                 .lastLoginAt(user.getLastLoginAt())
                 .password(user.getPassword())
+                .refreshToken(user.getRefreshToken())
                 .build();
     }
 
@@ -74,6 +76,7 @@ public class UserDocument implements UserDetails {
                 .lastUpdate(user.getLastUpdate())
                 .lastLoginAt(user.getLastLoginAt())
                 .password(user.getPassword())
+                .refreshToken(user.getRefreshToken())
                 .build();
     }
 

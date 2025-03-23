@@ -4,6 +4,8 @@ import com.yinnohs.gamesprer.shared.exception.NotSupportedFindType;
 import com.yinnohs.gamesprer.user.domain.model.User;
 import com.yinnohs.gamesprer.user.domain.port.in.UserService;
 import com.yinnohs.gamesprer.user.domain.port.out.UserRepository;
+import com.yinnohs.gamesprer.user.infrastructure.document.UserDocument;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,5 +60,10 @@ public class UserServiceImpl implements UserService {
         User userToUpdate = userRepository.findById(userid);
         userToUpdate.setPhoneNumber(phoneNumber);
         return userRepository.save(userToUpdate);
+    }
+
+    @Override
+    public void updateRefreshToken(User user) {
+       userRepository.save(user);
     }
 }

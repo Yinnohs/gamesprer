@@ -29,19 +29,29 @@ public class AuthService {
      
 
     public String generateToken(Authentication authentication, String userId){
-        var claims = getClaims("gamesprer", authentication.getName(), userId);
+        var now = Instant.now();
+        var expiresAt = now.plus(1, ChronoUnit.DAYS);
+        var claims = getClaims("gamesprer", authentication.getName(), userId, now, expiresAt);
         return  jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
-    private JwtClaimsSet getClaims(String issuer, String name, String userId){
+    public String generateRefreshToken(Authentication authentication, String userId){
         var now = Instant.now();
+        var expiresAt = now.plus(7, ChronoUnit.DAYS);
+        var claims = getClaims("gamesprer", authentication.getName(), userId, now, expiresAt);
+        return  jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
+    private JwtClaimsSet getClaims(String issuer, String name, String userId, Instant issueInstant, Instant expiresAt){
         return JwtClaimsSet.builder()
                 .issuer(issuer)
-                .issuedAt(now)
+                .issuedAt(issueInstant)
                 .subject(name)
-                .expiresAt(now.plus(1, ChronoUnit.DAYS))
+                .expiresAt(expiresAt)
                 .claim("userId", userId )
                 .build();
 
     }
+
+   
 }
