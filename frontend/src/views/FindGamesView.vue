@@ -9,7 +9,7 @@ import { useLink } from 'vue-router';
 import { useGamesStore } from '@/games/store/game.store';
 import { storeToRefs } from 'pinia';
 
-const { tokenRef, userBootstrap } = useUserStore()
+const { tokenRef, userBootstrap, userRef } = useUserStore()
 const { gamesRef } = storeToRefs(useGamesStore())
 const gameStore = useGamesStore()
 
@@ -31,10 +31,10 @@ const checkStoragedUser = (): boolean => {
 
 
 const handleFindGames = async() => {
-  if (!gameTitle.value)return
+  if (!gameTitle.value || !userRef?.id) return
   isLoading.value = true
   gameStore.cleanGames()
-  await gameStore.fetchGames(gameTitle.value, tokenRef)
+  await gameStore.fetchGames(gameTitle.value, tokenRef, userRef.id)
   gameTitle.value = ''
   isLoading.value = false
 }

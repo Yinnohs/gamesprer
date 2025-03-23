@@ -16,11 +16,10 @@ export const useGamesStore = defineStore('games', ()=>{
     gamesRef.value = []
   }
 
-  const fetchGames = async (gameTitle :string, token :string) => {
+  const fetchGames = async (gameTitle :string, token :string, userId: string) => {
     try {
       if (!gameTitle) return
-      debugger;
-      const url = `/api/gameinfo/${gameTitle}`
+      const url = `/api/gameinfo/${gameTitle}?userId=${userId}`
       const response = await httpClient.get<Game[]>(url, token)
       setGames(response)
     } catch (error) {

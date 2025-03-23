@@ -1,7 +1,7 @@
 import type { GameWebSocket } from "./GameWebSocket"
 import SockJS from 'sockjs-client'
 import Stomp, { Frame, type Message } from 'stompjs'
-import type { Notification } from '@/types/notification'
+import type { Notification } from '@/classes/Notification'
 
 export class GameWebSocketStompAdapter implements GameWebSocket {
   private userId: string
@@ -31,7 +31,7 @@ export class GameWebSocketStompAdapter implements GameWebSocket {
     this.onMessageCallback = callback
 
     // Make sure to use the correct WebSocket URL
-    this.socket = new SockJS(`http://localhost:5052/ws?userId=${this.userId}`)
+    this.socket = new SockJS(`http://90.171.77.134:5052/ws?userId=${this.userId}`)
     this.stompClient = Stomp.over(this.socket)
 
     const headers = {
