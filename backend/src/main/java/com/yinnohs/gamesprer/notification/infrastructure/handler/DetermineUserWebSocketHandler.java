@@ -25,7 +25,6 @@ public class DetermineUserWebSocketHandler extends DefaultHandshakeHandler {
         try {
             userId = extractUserIdFromRequest(request);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             log.error(e.getMessage());      
         }
         

@@ -51,12 +51,13 @@ public class UseCaseTests {
     @Test
     public void should_return_all_games_when_passed_similar_title() {
         //given
+        var userId = "123";
         var gameTitleToFind = "witch";
         int expectedGamesSize = 5;
         FindGamesBySimilarTitle findGamesBySimilarTitleUseCase = new FindGamesBySimilarTitle(gameService, apiService);
-        Mockito.when(apiService.signalScraper(gameTitleToFind)).thenReturn("ok");
+        Mockito.when(apiService.signalScraper(gameTitleToFind, userId)).thenReturn("ok");
         //when
-        var result = findGamesBySimilarTitleUseCase.execute(gameTitleToFind);
+        var result = findGamesBySimilarTitleUseCase.execute(gameTitleToFind, userId);
 
         //then 
         Assertions.assertEquals(expectedGamesSize, result.size());
@@ -65,12 +66,13 @@ public class UseCaseTests {
     @Test
     public void should_return_no_games_when_passed_title_with_no_ocurrencies() {
         //given
+        var userId = "123";
         var gameTitleToFind = "nich";
         int expectedGamesSize = 0;
         FindGamesBySimilarTitle findGamesBySimilarTitleUseCase = new FindGamesBySimilarTitle(gameService, apiService);
-        Mockito.when(apiService.signalScraper(gameTitleToFind)).thenReturn("ok");
+        Mockito.when(apiService.signalScraper(gameTitleToFind, userId)).thenReturn("ok");
         //when
-        var result = findGamesBySimilarTitleUseCase.execute(gameTitleToFind);
+        var result = findGamesBySimilarTitleUseCase.execute(gameTitleToFind, userId);
 
         //then 
         Assertions.assertEquals(expectedGamesSize, result.size());

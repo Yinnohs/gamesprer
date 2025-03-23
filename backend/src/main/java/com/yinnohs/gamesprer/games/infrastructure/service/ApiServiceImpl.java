@@ -19,8 +19,8 @@ public class ApiServiceImpl implements ApiService {
     private String serviceUrl;
 
     @Override
-    public String signalScraper(String gameTitle){
-        ResponseEntity<String> response = restTemplate.getForEntity(serviceUrl + "/" + gameTitle , String.class);
+    public String signalScraper(String gameTitle, String userId){
+        ResponseEntity<String> response = restTemplate.getForEntity(serviceUrl + "/" + gameTitle + "/?userId=" + userId, String.class);
         return response.getBody();
     }
 

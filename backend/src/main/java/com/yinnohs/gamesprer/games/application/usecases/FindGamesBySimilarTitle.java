@@ -15,18 +15,18 @@ public class FindGamesBySimilarTitle {
     private final GameService gameService;
     private final ApiService apiService;
 
-    public List<Game> execute(String title) {
+    public List<Game> execute(String title, String userId) {
         var games = gameService.findGameBySimilarTitle(title);
         if (games.isEmpty()) {
-            executeScraper(title);
+            executeScraper(title, userId);
             games = gameService.findGameBySimilarTitle(title);
         }
         return games;
     }
 
-    private void executeScraper(String gameTitle){
+    private void executeScraper(String gameTitle, String userId){
         try {
-            apiService.signalScraper(gameTitle);
+            apiService.signalScraper(gameTitle, userId);
         } catch (Exception e) {
             throw new CouldNotGetGamesException(e);
         }
