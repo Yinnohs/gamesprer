@@ -1,5 +1,6 @@
 # 1.- get the main image and set the working directory 
-FROM oven/bun:1 AS Base
+FROM oven/bun:1 AS base
+FROM base AS builder
 # set the working directory
 WORKDIR /app
 # Copy the working directory in the container
@@ -11,12 +12,12 @@ COPY . .
 # Build the Vue.js application to the production mode to dist folder
 RUN bun run build
 # Use the lightweight Nginx image from the previous stage for the nginx container
-FROM nginx:stable-alpine as production-stage
+FROM nginx:stable-alpine AS production-stage
 # Copy the build application from the previous stage to the Nginx container
-COPY - from=build-stage /app/dist /usr/share/nginx/html/
+COPY --from=builder /app/dist /usr/share/nginx/html/
 # Copy the nginx configuration file
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-# Expose the port 80
+# Expose the port 3000
 EXPOSE 3000
 # Start Nginx to serve the application
 CMD ["nginx", "-g", "daemon off;"]
